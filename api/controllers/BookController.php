@@ -1,16 +1,15 @@
 <?php
-class movie
+class book
 {
-    // GET listar
-    // localhost:81/appmovie/api/movie
-    public function index()
+    //http://localhost:81/SubastaLibreria/api/book
+    public function index()//todos los libros
     {
         try {
             $response = new Response();
             //Instancia modelo
-            $movieM = new MovieModel;
+            $bookM = new BookModel();
             //Método del modelo
-            $result = $movieM->all();
+            $result = $bookM->all();
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
@@ -18,16 +17,17 @@ class movie
             handleException($e);
         }
     }
+
     //GET Obtener 
-    // localhost:81/appmovie/api/movie/5
-    public function get($id)
+    //http://localhost:81/SubastaLibreria/api/book/1
+    public function get($id)//libro por id
     {
         try {
             $response = new Response();
             //Instancia del modelo
-            $movie = new MovieModel();
+            $bookM = new BookModel();
             //Acción del modelo a ejecutar
-            $result = $movie->get($id);
+            $result = $bookM->get($id);
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
@@ -35,6 +35,14 @@ class movie
             handleException($e);
         }
     }
+
+
+    
+
+
+
+
+    /* METDOS POR IMPLEMENTAR
      //Obtener peliculas por tienda
     public function moviesByShopRental($idShopRental)
     {
@@ -52,23 +60,7 @@ class movie
             
         }
     }
-    //Obtener cantidad de peliculas por genero
-    public function getCountByGenre($param)
-    {
-        try {
-            $response = new Response();
-            //Instancia del modelo
-            $movie = new MovieModel();
-            //Acción del modelo a ejecutar
-            $result = $movie->getCountByGenre($param);
-            //Dar respuesta
-            $response->toJSON($result);
-        } catch (Exception $e) {
-            $response->toJSON($result);
-            handleException($e);
-            
-        }
-    }
+    
     //POST Crear
     public function create()
     {
@@ -109,4 +101,24 @@ class movie
             
         }
     }
+
+    //Obtener cantidad de libros por genero
+    //http://localhost:81/SubastaLibreria/api/book/countByGenre
+    public function getCountByGenre($param)
+    {
+        try {
+            $response = new Response();
+            //Instancia del modelo
+            $book = new BookModel();
+            //Acción del modelo a ejecutar
+            $result = $book->getCountByGenre($param);
+            //Dar respuesta
+            $response->toJSON($result);
+        } catch (Exception $e) {
+            $response->toJSON($result);
+            handleException($e);
+            
+        }
+    }
+        */
 }

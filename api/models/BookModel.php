@@ -1,77 +1,74 @@
 <?php
-class MovieModel
+class BookModel
 {
-    //Conectarse a la BD
     public $enlace;
-
     public function __construct()
     {
         $this->enlace = new MySqlConnect();
     }
-    /**
-     * Listar peliculas
-     * @param 
-     * @return $vResultado - Lista de objetos
-     */
+
     public function all()
     {
-        $imagenM = new ImageModel();
-        $genreM = new GenreModel();
+        $imagenB = new ImageModel();
+        $genreB = new GenreModel();
+        $materialB = new MaterialModel();
+        $editionB = new EditionModel();
         //Consulta SQL
-        $vSQL = "SELECT * FROM movie order by title desc;";
+        $vSQL = "SELECT * FROM book order by id desc;";
         //Ejecutar la consulta
         $vResultado = $this->enlace->ExecuteSQL($vSQL);
         if(!empty($vResultado) && is_array($vResultado)){
             for ($i=0; $i < count($vResultado); $i++) { 
                 //Imagen
-                $vResultado[$i]->imagen=$imagenM->getImageMovie($vResultado[$i]->id);
+                $vResultado[$i]->imagen=$imagenB->getImageBook($vResultado[$i]->id);
                 //Generos - genres
-                $vResultado[$i]->genres=$genreM->getGenreMovie($vResultado[$i]->id);
+                $vResultado[$i]->genres=$genreB->getGenreBook($vResultado[$i]->id);
+                //Materiales - materials
+                $vResultado[$i]->materials=$materialB->get($vResultado[$i]->material_id);
+                //Ediciones - editions
+                $vResultado[$i]->editions=$editionB->get($vResultado[$i]->edition_id);
             }
         }
         //Retornar la respuesta
         return $vResultado;
     }
-    /**
-     * Obtener una pelicula
-     * @param $id de la pelicula
-     * @return $vresultado - Objeto pelicula
-     */
-    //
+
     public function get($id)
     {
-        $directorM = new DirectorModel();
-        $genreM = new GenreModel();
-        $actorM = new ActorModel();
-        $imagenM = new ImageModel();
-        $vSql = "SELECT * FROM movie
+        $imagenB = new ImageModel();
+        $genreB = new GenreModel();
+        $materialB = new MaterialModel();
+        $editionB = new EditionModel();
+        //Consulta SQL
+        $vSql = "SELECT * FROM book
                     where id=$id;";
-
         //Ejecutar la consulta sql
         $vResultado = $this->enlace->executeSQL($vSql);
         if(!empty($vResultado)){
             $vResultado=$vResultado[0];
             //Imagen
-            $vResultado->imagen=$imagenM->getImageMovie($vResultado->id);
+            $vResultado->imagen=$imagenB->getImageBook($id);
             //Director
-            $vResultado->director=$directorM->get($vResultado->director_id);
+            $vResultado->material=$materialB->get($vResultado->material_id);
             //Generos-genres
-            $vResultado->genres=$genreM->getGenreMovie($id);            
+            $vResultado->genres=$genreB->getGenreBook($id);            
             //Actores - actors
-            $vResultado->actors=$actorM->getActorMovie($vResultado->id);
-
+            $vResultado->edition=$editionB->get($vResultado->edition_id);
         }
-
         //Retornar la respuesta
         return $vResultado;
     }
-    /**
-     * Obtener las peliculas por tienda
-     * @param $idShopRental identificador de la tienda
-     * @return $vresultado - Lista de peliculas incluyendo el precio
-     */
-    //
-    //Obtener el inventario de películas de una tienda, incluyendo nombre de la película y precio
+
+    
+
+
+
+
+
+
+
+
+    /*
     public function moviesByShopRental($idShopRental)
     {
         $imagenM = new ImageModel();
@@ -108,33 +105,7 @@ class MovieModel
 
         return $vResultado;
     }
-    /**
-     * Obtener la cantidad de peliculas por genero
-     * @param 
-     * @return $vresultado - Cantidad de peliculas por genero
-     */
-    //
-    public function getCountByGenre()
-    {
 
-        $vResultado = null;
-        //Consulta sql
-        $vSql = "SELECT count(mg.genre_id) as 'Cantidad', g.title as 'Genero'
-			FROM genre g, movie_genre mg, movie m
-			where mg.movie_id=m.id and mg.genre_id=g.id
-			group by mg.genre_id";
-
-        //Ejecutar la consulta
-        $vResultado = $this->enlace->ExecuteSQL($vSql);
-        // Retornar el objeto
-        return $vResultado;
-    }
-    /**
-     * Crear pelicula
-     * @param $objeto pelicula a insertar
-     * @return $this->get($idMovie) - Objeto pelicula
-     */
-    //
     public function create($objeto)
     {
         //Consulta sql
@@ -144,12 +115,7 @@ class MovieModel
         //Retornar pelicula
         
     }
-    /**
-     * Actualizar pelicula
-     * @param $objeto pelicula a actualizar
-     * @return $this->get($idMovie) - Objeto pelicula
-     */
-    //
+
     public function update($objeto)
     {
         //Consulta sql
@@ -184,4 +150,23 @@ class MovieModel
         //Retornar pelicula
         return $this->get($objeto->id);
     }
+    public function getCountByGenre($idGenre)
+    {
+
+        $vResultado = null;
+        //Consulta sql
+        $vSql = "SELECT count(bg.book_id) as 'Cantidad', g.title as 'Genero'
+             FROM genre g
+             INNER JOIN book_genre bg ON g.id = bg.genre_id
+             INNER JOIN book b ON bg.book_id = b.id
+             WHERE g.id = $idGenre
+             GROUP BY g.id";
+
+        //Ejecutar la consulta
+        $vResultado = $this->enlace->ExecuteSQL($vSql);
+        // Retornar el objeto
+        return $vResultado;
+    }
+
+        */
 }

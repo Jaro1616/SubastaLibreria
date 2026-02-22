@@ -1,43 +1,26 @@
 <?php
-class RolModel
+class EditionModel
 {
     public $enlace;
     public function __construct()
     {
         $this->enlace = new MySqlConnect();
     }
-
+    /*Listar */
     public function all()
     {
         //Consulta sql
-        $vSql = "SELECT * FROM rol;";
-
+        $vSql = "SELECT * FROM edition;";
         //Ejecutar la consulta
         $vResultado = $this->enlace->ExecuteSQL($vSql);
-
         // Retornar el objeto
         return $vResultado;
     }
-
+    /*Obtener */
     public function get($id)
     {
         //Consulta sql
-        $vSql = "SELECT * FROM rol where id=$id";
-
-        //Ejecutar la consulta
-        $vResultado = $this->enlace->ExecuteSQL($vSql);
-        
-        // Retornar el objeto
-        return $vResultado[0];
-    }
-
-    public function getRolUser($idUser)
-    {
-        //Consulta sql
-        $vSql = "SELECT r.id,r.name
-            FROM rol r,user u 
-            where r.id=u.rol_id and u.id=$idUser";
-
+        $vSql = "SELECT * FROM edition where id=$id";
         //Ejecutar la consulta
         $vResultado = $this->enlace->ExecuteSQL($vSql);
         // Retornar el objeto

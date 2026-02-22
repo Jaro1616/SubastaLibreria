@@ -1,8 +1,7 @@
 <?php
-//class Genre
 class image{
-    //POST Crear
-    public function create()
+    //http://localhost:81/SubastaLibreria/api/image
+    public function create()//crear imagen
     {
         try {
             $request = new Request();
@@ -21,12 +20,14 @@ class image{
             
         }
     }
-    public function get($id)
+
+    //http://localhost:81/SubastaLibreria/api/image/1
+    public function get($idBook)//obtener imagen por id de libro
     {
         try {
             $response = new Response();
             $imagen = new ImageModel();
-            $result = $imagen->getImageMovie($id);
+            $result = $imagen->getImageBook($idBook);
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {

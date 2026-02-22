@@ -1,23 +1,19 @@
 <?php
-
 use Firebase\JWT\JWT;
-
 class UserModel
 {
 	public $enlace;
 	public function __construct()
 	{
-
 		$this->enlace = new MySqlConnect();
 	}
+
 	public function all()
 	{
 		//Consulta sql
 		$vSql = "SELECT * FROM user;";
-
 		//Ejecutar la consulta
 		$vResultado = $this->enlace->ExecuteSQL($vSql);
-
 		// Retornar el objeto
 		return $vResultado;
 	}
@@ -39,16 +35,40 @@ class UserModel
 			return null;
 		}
 	}
-	public function allCustomer()
+
+	public function allAdmin()
 	{
 		//Consulta sql
-		$vSql = "SELECT * FROM movie_rental.user
-					where rol_id=2;";
+		$vSql = "SELECT * FROM subasta_libros.user where rol_id=1;";
 		//Ejecutar la consulta
 		$vResultado = $this->enlace->ExecuteSQL($vSql);
 		// Retornar el objeto
 		return $vResultado;
 	}
+
+	public function allSeller()
+	{
+		//Consulta sql
+		$vSql = "SELECT * FROM subasta_libros.user where rol_id=2;";
+		//Ejecutar la consulta
+		$vResultado = $this->enlace->ExecuteSQL($vSql);
+		// Retornar el objeto
+		return $vResultado;
+	}
+
+	public function allBuyer()
+	{
+		//Consulta sql
+		$vSql = "SELECT * FROM subasta_libros.user where rol_id=3;";
+		//Ejecutar la consulta
+		$vResultado = $this->enlace->ExecuteSQL($vSql);
+		// Retornar el objeto
+		return $vResultado;
+	}
+
+
+
+	/* AUN NO SE UTILIZAN ESTAS FUNCIONES
 	public function customerbyShopRental($idShopRental)
 	{
 		//Consulta sql
@@ -59,15 +79,14 @@ class UserModel
 		// Retornar el objeto
 		return $vResultado;
 	}
+
 	public function login($objeto)
-	{
-		
-		return false;
-		
+	{		
+		return false;	
 	}
 	public function create($objeto)
 	{
-
 		return false;
 	}
+	*/
 }

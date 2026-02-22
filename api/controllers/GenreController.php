@@ -1,7 +1,8 @@
 <?php
 class genre
 {
-    public function index()
+    //http://localhost:81/SubastaLibreria/api/genre
+    public function index()//todos los generos
     {
         try {
             $response = new Response();
@@ -16,7 +17,9 @@ class genre
             
         }
     }
-    public function get($param)
+
+    //http://localhost:81/SubastaLibreria/api/genre/1
+    public function get($param)//genero por id
     {
         try {
             $response = new Response();
@@ -30,12 +33,14 @@ class genre
             
         }
     }
-    public function getGenreMovie($id)
+
+    //http://localhost:81/SubastaLibreria/api/genre/getGenreBook/1
+    public function getGenreBook($id)//generos de un libro
     {
         try {
             $response = new Response();
             $genero = new GenreModel();
-            $result = $genero->getGenreMovie($id);
+            $result = $genero->getGenreBook($id);
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
@@ -44,12 +49,15 @@ class genre
             
         }
     }
-    public function getMoviesbyGenre($param)
+
+    //NO SIRVE 
+    //http://localhost:81/SubastaLibreria/api/genre/getBooksbyGenre/1
+    public function getBooksbyGenre($param)//libros por genero
     {
         try {
             $response = new Response();
             $genero = new GenreModel();
-            $result = $genero->getMoviesbyGenre($param);
+            $result = $genero->getBooksbyGenre($param);
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
