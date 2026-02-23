@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import MovieService from '../../services/BookService';
 import { ErrorAlert } from "../ui/custom/ErrorAlert";
 // Shadcn UI Components
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,18 +16,20 @@ import {
 } from "lucide-react";
 import { LoadingGrid } from '../ui/custom/LoadingGrid';
 import { EmptyState } from '../ui/custom/EmptyState';
+import BookService from '../../services/BookService';
 
-export function DetailMovie() {
+export function DetailBook() {
     const navigate = useNavigate();
     const { id } = useParams();
     const BASE_URL = import.meta.env.VITE_BASE_URL + 'uploads';
-    const [movie, setData] = useState(null);
+    const [book, setData] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await MovieService.getMovieById(id);
+                const response = await BookService.getBookById(id);
                 // Si la petición es exitosa, se guardan los datos
                 console.log(response.data)
                 setData(response.data);
@@ -48,19 +49,19 @@ export function DetailMovie() {
 
 
     if (loading) return <LoadingGrid count={1} type="grid" />;
-    if (error) return <ErrorAlert title="Error al cargar películas" message={error} />;
-    if (!movie || movie.data.length === 0)
-        return <EmptyState message="No se encontraron películas en esta tienda." />;
+    if (error) return <ErrorAlert title="Error al cargar libros" message={error} />;
+    if (!book || book.data.length === 0)
+        return <EmptyState message="No se encontraron libros en esta tienda." />;
     return (
         <div className="max-w-4xl mx-auto py-12 px-4">
             <div className="flex flex-col md:flex-row gap-8 items-start">
-                {/* Sección de la Imagen con año en Badge */}
+                {/* Sección de la Imagen */}
                 <div className="relative flex-shrink-0 w-full md:w-1/4 lg:w-1/5 rounded-lg overflow-hidden shadow-xl">
                     <div className="aspect-[2/3] w-full bg-muted flex items-center justify-center">
-                        {movie.data.imagen?.image ? ( 
+                        {book.data.imagen?.image_path ? ( 
                             <img
-                                src={`${BASE_URL}/${movie.data.imagen.image}`}
-                                alt={`Poster de ${movie.data.title}`}
+                                src={`${BASE_URL}/${book.data.imagen.image_path}`}
+                                alt={`Poster de ${book.data.title}`}
                                 className="w-full h-full object-contain"
                             />
                         ):(
@@ -69,52 +70,52 @@ export function DetailMovie() {
                     </div>
                     {/* Badge del año en la esquina inferior derecha */}
                     <Badge variant="secondary" className="absolute bottom-4 right-4 text-1xl">
-                        {movie.data.year}
+                        {book.data.year}
                     </Badge>
                 </div>
 
                 {/* Sección de los Detalles */}
                 <div className="flex-1 space-y-6">
-                    {/* Título de la película */}
+                    {/* Título del libro */}
                     <div>
                         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-                            {movie.data.title}
+                            {book.data.title}
                         </h1>
                     </div>
 
                     <Card>
                         <CardContent className="p-6 space-y-6">
-                            {/* Información de director, duración e idioma en una sola fila */}
+                            {/* Información de edicion, descipcion e isbn en una sola fila */}
                             <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
-                                {/* Director */}
+                                {/* Edicion */}
                                 <div className="flex items-center gap-4">
                                     <User className="h-5 w-5 text-primary" />
-                                    <span className="font-semibold">Director:</span>
+                                    <span className="font-semibold">Edición:</span>
                                     <p className="text-muted-foreground">
-                                        {movie.data.director.fname} {movie.data.director.lname}
+                                        {book.data.edition.name}
                                     </p>
                                 </div>
-                                {/* Duración */}
+                                {/* descripcion */}
                                 <div className="flex items-center gap-4">
                                     <Clock className="h-5 w-5 text-primary" />
-                                    <span className="font-semibold">Duración:</span>
+                                    <span className="font-semibold">Descripción:</span>
                                     <p className="text-muted-foreground">
-                                        {movie.data.time} min.
+                                        {book.data.description}
                                     </p>
                                 </div>
-                                {/* Idioma */}
+                                {/* isbn */}
                                 <div className="flex items-center gap-4">
                                     <Globe className="h-5 w-5 text-primary" />
-                                    <span className="font-semibold">Idioma:</span>
+                                    <span className="font-semibold">IsBn:</span>
                                     <p className="text-muted-foreground">
-                                    {movie.data.lang}
+                                    {book.data.isbn}
                                     </p>
                                 </div>
                             </div>
 
-                            {/* Contenedor de dos columnas para géneros y actores */}
+                            {/* Contenedor de dos columnas para géneros y materiales */}
                             <div className="grid gap-4 md:grid-cols-2">
-                            {movie.data.genres && movie.data.genres.length > 0 && ( 
+                            {book.data.genres && book.data.genres.length > 0 && ( 
                                     <div>
                                         <div className="flex items-center gap-4 mb-2">
                                             <Film className="h-5 w-5 text-primary" />
@@ -122,7 +123,7 @@ export function DetailMovie() {
                                         </div>
                                         <div className="flex flex-col space-y-1">
                                             
-                                                {movie.data.genres.map((genre)=>(
+                                                {book.data.genres.map((genre)=>(
                                                 <div key={genre.id}  className="flex items-center gap-2 py-1 px-2 text-sm">
                                                     <ChevronRight className="h-4 w-4 text-secondary" />
                                                     <span className="text-muted-foreground">
@@ -134,24 +135,40 @@ export function DetailMovie() {
                                     </div>
                                 )}
 
-                                {movie.data.actors && movie.data.actors.length > 0 && (
+                                {/* {book.data.material && book.data.material.length > 0 && (
                                     <div>
                                         <div className="flex items-center gap-4 mb-2">
                                             <Star className="h-5 w-5 text-primary" />
                                             <span className="font-semibold">Actores Principales:</span>
                                         </div>
                                         <div className="flex flex-col space-y-1">
-                                         {movie.data.actors.map((actor)=>(
-                                                <div key={actor.id}  className="flex items-center gap-2 py-1 px-2 text-sm">
+                                         {book.data.material.map((material)=>(
+                                                <div key={material.id}  className="flex items-center gap-2 py-1 px-2 text-sm">
                                                     <Star className="h-4 w-4 text-secondary" />
                                                     <span className="text-muted-foreground">
-                                                        {`${actor.fname} ${actor.lname}`}
+                                                        {`${material.name}`}
                                                     </span>
                                                 </div>
                                          ))}
                                         </div>
                                     </div>
+                                )} */}
+                                {book?.data?.material && (
+                                <div>
+                                    <div className="flex items-center gap-4 mb-2">
+                                    <Star className="h-5 w-5 text-primary" />
+                                    <span className="font-semibold">Material:</span>
+                                    </div>
+
+                                    <div className="flex items-center gap-2 py-1 px-2 text-sm">
+                                    <Star className="h-4 w-4 text-secondary" />
+                                    <span className="text-muted-foreground">
+                                        {book.data.material.name}
+                                    </span>
+                                    </div>
+                                </div>
                                 )}
+
                             </div>
                         </CardContent>
                     </Card>

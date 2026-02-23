@@ -68,7 +68,7 @@ export function ListCardBooks({ data }) {
                   <Button
                     size="icon" className="size-8"
                   >
-                    <Link to={`/movie/detail/${item.id}`}>
+                    <Link to={`/book/detail/${item.id}`}>
                       <Info />
                     </Link>
                   </Button>

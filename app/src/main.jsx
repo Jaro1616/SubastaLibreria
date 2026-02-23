@@ -7,7 +7,7 @@ import { Home } from './components/Home/Home'
 import { PageNotFound } from './components/Home/PageNotFound'
 import TableMovies from './components/Book/TableMovies'
 import { ListBooks } from './components/Book/ListBooks'
-import { DetailMovie } from './components/Book/DetailMovie'
+import { DetailBook } from './components/Book/DetailBook'
 
 const rutas = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ const rutas = createBrowserRouter([
        //Rutas componentes
       {path:"book/table", element: <TableMovies/>},
       {path:"book", element: <ListBooks/>},
-      {path:"book/detail/:id", element: <DetailMovie />}
+      {path:"book/detail/:id", element: <DetailBook />}
 
     ]
   }
