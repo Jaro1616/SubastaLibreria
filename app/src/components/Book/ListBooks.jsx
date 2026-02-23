@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
-import MovieService from "../../services/MovieService";
+import BookService from "../../services/BookService";
 import { LoadingGrid } from "../ui/custom/LoadingGrid";
 import { EmptyState } from "../ui/custom/EmptyState";
 import { ErrorAlert } from "../ui/custom/ErrorAlert";
-import { ListCardMovies } from "./ListCardMovies";
 
-export function ListMovies({ idShopRental = 1 }) {
+import { ListCardBooks } from "./ListCardBook";
+
+export function ListBooks() {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        const fetchData = async (idShopRental) => {
+        const fetchData = async () => {
             try {
-                const response = await MovieService.getMovieByShopRental(idShopRental);
+                const response = await BookService.getBooks();
                 // Si la petición es exitosa, se guardan los datos
                 console.log(response.data)
                 setData(response.data);
@@ -27,19 +28,19 @@ export function ListMovies({ idShopRental = 1 }) {
                 setLoading(false);
             }
         };
-        fetchData(idShopRental)
-    }, [idShopRental]);
+        fetchData()
+    }, []);
 
 
     if (loading) return <LoadingGrid type="grid" />;
-    if (error) return <ErrorAlert title="Error al cargar películas" message={error} />;
+    if (error) return <ErrorAlert title="Error al cargar libros" message={error} />;
     if (!data || data.data.length === 0)
-        return <EmptyState message="No se encontraron películas en esta tienda." />;
+        return <EmptyState message="No se encontraron libros para el usuario." />;
 
     return (
         <div className="mx-auto max-w-7xl p-6">
         {data && (
-            <ListCardMovies data={data.data} isShopping />
+            <ListCardBooks data={data.data} />
         )}
         </div>
     );

@@ -15,7 +15,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Edit, Plus, Trash2, ArrowLeft } from "lucide-react";
-import MovieService from "@/services/MovieService";
+import MovieService from "@/services/BookService";
 import { useEffect, useState } from "react";
 import { LoadingGrid } from "../ui/custom/LoadingGrid";
 import { ErrorAlert } from "../ui/custom/ErrorAlert";

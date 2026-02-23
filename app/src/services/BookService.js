@@ -1,19 +1,21 @@
 import axios from 'axios';
-//http://http://localhost:81/appmovie/api/movie/
-const BASE_URL = import.meta.env.VITE_BASE_URL + 'movie';
-class MovieService {
-  //Definición para Llamar al API y obtener el listado de películas
+//http://localhost:81/SubastaLibreria/api/book
+const BASE_URL = import.meta.env.VITE_BASE_URL + 'book';
+class BookService {
+  //Definición para Llamar al API y obtener el listado de libros
 
   //Listas peliculas
-  //http://localhost:81/appmovie/api/movie
-  getMovies() {
+  //http://localhost:81/SubastaLibreria/api/book
+  getBooks() {
     return axios.get(BASE_URL);
   }
   //Obtener pelicula
-  //http://localhost:81/appmovie/api/movie/1
-  getMovieById(MovieId){
-    return axios.get(BASE_URL+'/'+MovieId);
+  //http://localhost:81/SubastaLibreria/api/book/1
+  getBookById(BookId){
+    return axios.get(BASE_URL+'/'+BookId);
   }
+  
+  /*
   //Obtener peliculas por tienda
   //http://localhost:81/appmovie/api/movie/moviesByShopRental/1
   getMovieByShopRental(ShopRentalId){
@@ -31,5 +33,6 @@ class MovieService {
 
     })
   }
+  */
 }
-export default new MovieService();
+export default new BookService();

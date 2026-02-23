@@ -36,28 +36,28 @@ export default function Header() {
   const userEmail = "Invitado";
 
 const navItems = [
-  { title: "Películas", href: "/movie", icon: <Film className="h-4 w-4" /> },
+  { title: "Libros", href: "/book", icon: <Film className="h-4 w-4" /> },
   {
-    title: "Filtrar Películas",
-    href: "/movie/filter",
+    title: "Filtrar Libros",
+    href: "/book/filter",
     icon: <Filter className="h-4 w-4" />,
   },
 ];
 
 const mantItems = [
  {
-      title: "Películas",
-      href: "movie/table",
+      title: "Libros",
+      href: "book/table",
       icon: <Wrench className="h-4 w-4" />,
     },
     {
-      title: "Alquileres",
-      href: "rental",
+      title: "Subastas",
+      href: "auction",
       icon: <ShoppingBasket className="h-4 w-4" />,
     },
     {
-      title: "Gráfico de Alquileres",
-      href: "/rental/graph",
+      title: "Gráfico de Subastas",
+      href: "/auction/graph",
       icon: <ChartArea className="h-4 w-4" />,
     },
 ];
@@ -85,16 +85,16 @@ const userItems = [
           className="flex items-center gap-2 text-xl font-semibold tracking-wide hover:opacity-90 transition"
         >
           <Clapperboard className="h-6 w-6" />
-          <span className="hidden sm:inline">MoviesApp</span>
+          <span className="hidden sm:inline">SubasApp</span>
         </Link>
 
         {/* -------- Menú escritorio -------- */}
         <div className="hidden md:flex flex-1 justify-center">
           <Menubar className="w-auto bg-transparent border-none shadow-none space-x-6">
-            {/* Películas */}
+            {/* Libros */}
             <MenubarMenu>
               <MenubarTrigger className="text-white font-medium flex items-center gap-1 hover:text-secondary transition">
-                <Film className="h-4 w-4" /> Películas
+                <Film className="h-4 w-4" /> Libros
                 <ChevronDown className="h-3 w-3" />
               </MenubarTrigger>
               <MenubarContent className="bg-primary/0 backdrop-blur-md border-white/10">
@@ -102,15 +102,15 @@ const userItems = [
                   <MenubarItem key={item.href} asChild>
                     <Link
                       to={item.href}
-                      className="flex items-center gap-2 py-2 px-3 rounded-md text-sm hover:bg-accent/10 transition"
-      >
-        
+                      className="flex items-center gap-2 py-2 px-3 rounded-md text-sm hover:bg-accent/10 transition">
                       {item.icon} {item.title}
                     </Link>
                   </MenubarItem>
                 ))}
               </MenubarContent>
             </MenubarMenu>
+
+
 
             {/* Mantenimientos */}
             <MenubarMenu>

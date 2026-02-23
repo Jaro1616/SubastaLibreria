@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Layout } from './components/Layout/Layout'
 import { Home } from './components/Home/Home'
 import { PageNotFound } from './components/Home/PageNotFound'
-import TableMovies from './components/Movie/TableMovies'
-import { ListMovies } from './components/Movie/ListMovies'
-import { DetailMovie } from './components/Movie/DetailMovie'
+import TableMovies from './components/Book/TableMovies'
+import { ListBooks } from './components/Book/ListBooks'
+import { DetailMovie } from './components/Book/DetailMovie'
 
 const rutas = createBrowserRouter([
   {
@@ -18,10 +18,11 @@ const rutas = createBrowserRouter([
 
       // Ruta comodín (404)
       { path: "*", element: <PageNotFound /> },
+      
        //Rutas componentes
-      {path:"movie/table", element: <TableMovies/>},
-      {path:"movie", element: <ListMovies/>},
-      {path:"movie/detail/:id", element: <DetailMovie />}
+      {path:"book/table", element: <TableMovies/>},
+      {path:"book", element: <ListBooks/>},
+      {path:"book/detail/:id", element: <DetailMovie />}
 
     ]
   }
