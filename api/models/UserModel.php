@@ -36,6 +36,11 @@ class UserModel
 			$vResultado = $vResultado[0];
 			$rol = $rolM->getRolUser($id);
 			$vResultado->rol = $rol;
+			
+			// Campos calculados
+			$vResultado->subastas_creadas = $this->countSubastasCreadas($id);
+			$vResultado->pujas_realizadas = $this->countPujasRealizadas($id);
+
 			// Retornar el objeto
 			return $vResultado;
 		} else {
@@ -73,27 +78,27 @@ class UserModel
 		return $vResultado;
 	}
 
-
-
-	/* AUN NO SE UTILIZAN ESTAS FUNCIONES
-	public function customerbyShopRental($idShopRental)
+	//LO DE LAS SUBASTAS
+	public function countSubastasCreadas($userId)
 	{
-		//Consulta sql
-		$vSql = "SELECT * FROM movie_rental.user
-					where rol_id=2 and shop_id=$idShopRental;";
-		//Ejecutar la consulta
-		$vResultado = $this->enlace->ExecuteSQL($vSql);
-		// Retornar el objeto
-		return $vResultado;
+		$sql = "
+			SELECT COUNT(*) AS total
+			FROM auction a
+			INNER JOIN book b ON b.id = a.book_id
+			WHERE b.seller_id = $userId
+		";
+		$result = $this->enlace->ExecuteSQL($sql);
+		return $result ? (int)$result[0]->total : 0;
 	}
 
-	public function login($objeto)
-	{		
-		return false;	
-	}
-	public function create($objeto)
+	public function countPujasRealizadas($userId)
 	{
-		return false;
+		$sql = "
+			SELECT COUNT(*) AS total
+			FROM bid
+			WHERE customer_id = $userId
+		";
+		$result = $this->enlace->ExecuteSQL($sql);
+		return $result ? (int)$result[0]->total : 0;
 	}
-	*/
 }

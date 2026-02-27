@@ -5,7 +5,6 @@ import {
   Book,
   ChartArea,
   Filter,
-  Wrench,
   LogIn,
   UserPlus,
   LogOut,
@@ -36,7 +35,7 @@ export default function Header() {
   const userEmail = "Invitado";
 
 const navItems = [
-  { title: "Mis Libros", href: "/book", icon: <Book className="h-4 w-4" /> },
+  //{ title: "Mis Libros", href: "/book", icon: <Book className="h-4 w-4" /> },
   {
     title: "Filtrar Libros",
     href: "/book/filter",
@@ -47,8 +46,8 @@ const navItems = [
 const mantItems = [
  {
       title: "Libros",
-      href: "book/table",
-      icon: <Wrench className="h-4 w-4" />,
+      href: "/book",
+      icon: <Book className="h-4 w-4" />,
     },
     {
       title: "Usuarios",

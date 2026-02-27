@@ -13,6 +13,7 @@ class BookModel
         $genreB = new GenreModel();
         $materialB = new MaterialModel();
         $editionB = new EditionModel();
+        $userB = new UserModel();
         //Consulta SQL
         $vSQL = "SELECT * FROM book order by id desc;";
         //Ejecutar la consulta
@@ -27,6 +28,8 @@ class BookModel
                 $vResultado[$i]->materials=$materialB->get($vResultado[$i]->material_id);
                 //Ediciones - editions
                 $vResultado[$i]->editions=$editionB->get($vResultado[$i]->edition_id);
+                //Vendedor - seller
+                $vResultado[$i]->seller=$userB->get($vResultado[$i]->seller_id);
             }
         }
         //Retornar la respuesta
@@ -39,6 +42,7 @@ class BookModel
         $genreB = new GenreModel();
         $materialB = new MaterialModel();
         $editionB = new EditionModel();
+        $userB = new UserModel();
         //Consulta SQL
         $vSql = "SELECT * FROM book
                     where id=$id;";
@@ -54,18 +58,12 @@ class BookModel
             $vResultado->genres=$genreB->getGenreBook($id);            
             //Actores - actors
             $vResultado->edition=$editionB->get($vResultado->edition_id);
+            //Vendedor - seller
+            $vResultado->seller=$userB->get($vResultado->seller_id);
         }
         //Retornar la respuesta
         return $vResultado;
     }
-
-    
-
-
-
-
-
-
 
 
     /*

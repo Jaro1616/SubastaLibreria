@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
-import { Clock, Globe, Info, FilmIcon } from "lucide-react";
+import { ScanBarcode, TextInitial, Info, FilmIcon, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -17,7 +17,7 @@ export function ListCardBooks({ data }) {
       {data && data.map((item) => (
         <Card key={item.id} className="flex flex-col overflow-hidden">
           {/* Header */}
-          <CardHeader className="text-secondary text-center">
+          <CardHeader className="text-primary text-center">
             <CardTitle className="text-lg font-semibold">
               {item.title}
             </CardTitle>
@@ -50,14 +50,17 @@ export function ListCardBooks({ data }) {
           {/* Contenido */}
           <CardContent className="flex-1 space-y-2 pt-4">
             <p className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Clock className="h-4 w-4 text-primary" />
-              Cod: {item.isbn}
+              <User className="h-6 w-6 text-primary" />
+              Dueño: {item.seller.name}
             </p>
             <p className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Globe className="h-4 w-4 text-secondary" />
+              <ScanBarcode className="h-6 w-6 text-primary" />
+              {item.isbn}
+            </p>
+            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+              <TextInitial className="h-6 w-6 text-primary" />
               {item.description}
             </p>
-
           </CardContent>
 
           {/* Acciones */}

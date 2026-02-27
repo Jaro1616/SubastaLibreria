@@ -6,32 +6,26 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-    TextInitial,
-    ScanBarcode,
-    ReceiptText,
-    ScrollText,
-    BookDashed,
-    ChevronRight,
-    ArrowLeft,
+    CalendarDays,
     User,
-    Calendar
+    ArrowLeft,
+    ShieldCheck
 } from "lucide-react";
 import { LoadingGrid } from '../ui/custom/LoadingGrid';
 import { EmptyState } from '../ui/custom/EmptyState';
-import BookService from '../../services/BookService';
+import UserService from "@/services/UserService";
 
-export function DetailBook() {
+export default function DetailUser() {
     const navigate = useNavigate();
     const { id } = useParams();
-    const BASE_URL = import.meta.env.VITE_BASE_URL + 'uploads';
-    const [book, setData] = useState(null);
+    const [user, setData] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await BookService.getBookById(id);
+                const response = await UserService.getUserById(id);
                 // Si la petición es exitosa, se guardan los datos
                 console.log(response.data)
                 setData(response.data);
@@ -51,28 +45,22 @@ export function DetailBook() {
 
 
     if (loading) return <LoadingGrid count={1} type="grid" />;
-    if (error) return <ErrorAlert title="Error al cargar libros" message={error} />;
-    if (!book || book.data.length === 0)
-        return <EmptyState message="No se encontraron libros en esta tienda." />;
+    if (error) return <ErrorAlert title="Error al cargar usuarios" message={error} />;
+    if (!user || user.data.length === 0)
+        return <EmptyState message="No se encontraron usuarios en esta tienda." />;
     return (
         <div className="max-w-4xl mx-auto py-12 px-4">
             <div className="flex flex-col md:flex-row gap-8 items-start">
                 {/* Sección de la Imagen */}
                 <div className="relative flex-shrink-0 w-full md:w-1/4 lg:w-1/5 rounded-lg overflow-hidden shadow-xl">
                     <div className="aspect-[2/3] w-full bg-muted flex items-center justify-center">
-                        {book.data.imagen?.image_path ? ( 
-                            <img
-                                src={`${BASE_URL}/${book.data.imagen.image_path}`}
-                                alt={`Poster de ${book.data.title}`}
-                                className="w-full h-full object-contain"
-                            />
-                        ):(
-                            <ScrollText className="h-1/2 w-1/2 text-muted-foreground" />
-                        )}
+                        {
+                        <User className="h-30 w-30 text-detail" />
+}
                     </div>
                     {/* Badge del año en la esquina inferior derecha */}
                     <Badge variant="secondary" className="absolute bottom-4 right-4 text-1xl">
-                        {book.data.year}
+                        {user.data.rol.name}
                     </Badge>
                 </div>
 
@@ -81,7 +69,7 @@ export function DetailBook() {
                     {/* Título del libro */}
                     <div>
                         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-                            {book.data.title}
+                            {user.data.name}
                         </h1>
                     </div>
 
@@ -91,52 +79,52 @@ export function DetailBook() {
                             <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
                                 {/* Edicion */}
                                 <div className="flex items-center gap-4">
-                                    <ReceiptText className="h-5 w-5 text-primary" />
-                                    <span className="font-semibold">Edición:</span>
+                                    <ShieldCheck className="h-5 w-5 text-primary" />
+                                    <span className="font-semibold">Estado:</span>
                                     <p className="text-muted-foreground">
-                                        {book.data.edition.name}
+                                        {user.data.active ? "Activo" : "Inactivo"}
                                     </p>
                                 </div>
                                 {/* descripcion */}
                                 <div className="flex items-center gap-4">
-                                    <TextInitial className="h-5 w-5 text-primary" />
-                                    <span className="font-semibold">Descripción:</span>
+                                    <CalendarDays className="h-5 w-5 text-primary" />
+                                    <span className="font-semibold">Fecha de registro:</span>
                                     <p className="text-muted-foreground">
-                                        {book.data.description}
+                                        {user.data.date_created}
                                     </p>
                                 </div>
-                                {/* isbn */}
+
+                                {/* Subastas */}
+                                {/* Solo para Vendedor */}
+                                {user.data?.rol?.name === "Vendedor" && (
                                 <div className="flex items-center gap-4">
-                                    <ScanBarcode className="h-5 w-5 text-primary" />
-                                    <span className="font-semibold">IsBn:</span>
+                                    <CalendarDays className="h-5 w-5 text-primary" />
+                                    <span className="font-semibold">Subastas creadas:</span>
                                     <p className="text-muted-foreground">
-                                    {book.data.isbn}
+                                    {user.data.subastas_creadas}
                                     </p>
                                 </div>
-                                {/* Fecha de Registro */}
+                                )}
+
+                                {/* Pujas */}
+                                {/* Solo para Comprador */}
+                                {user.data?.rol?.name === "Comprador" && (
                                 <div className="flex items-center gap-4">
-                                    <Calendar className="h-5 w-5 text-primary" />
-                                    <span className="font-semibold">Fecha Registro:</span>
+                                    <CalendarDays className="h-5 w-5 text-primary" />
+                                    <span className="font-semibold">Pujas realizadas:</span>
                                     <p className="text-muted-foreground">
-                                    {book.data.register_date}
+                                    {user.data.pujas_realizadas}
                                     </p>
                                 </div>
-                                {/* Propietario */}
-                                <div className="flex items-center gap-4">
-                                    <User className="h-5 w-5 text-primary" />
-                                    <span className="font-semibold">Propietario:</span>
-                                    <p className="text-muted-foreground">
-                                    {book.data.seller.name}
-                                    </p>
-                                </div>
+                                )}
                             </div>
 
-                            {/* Contenedor de dos columnas para géneros y materiales */}
+{/*                             //Contenedor de dos columnas para géneros y materiales
                             <div className="grid gap-4 md:grid-cols-2">
                             {book.data.genres && book.data.genres.length > 0 && ( 
                                     <div>
                                         <div className="flex items-center gap-4 mb-2">
-                                            <ScrollText className="h-5 w-5 text-primary" />
+                                            <Film className="h-5 w-5 text-primary" />
                                             <span className="font-semibold">Géneros:</span>
                                         </div>
                                         <div className="flex flex-col space-y-1">
@@ -152,34 +140,15 @@ export function DetailBook() {
                                         </div>
                                     </div>
                                 )}
-
-                                {/* {book.data.material && book.data.material.length > 0 && (
-                                    <div>
-                                        <div className="flex items-center gap-4 mb-2">
-                                            <Star className="h-5 w-5 text-primary" />
-                                            <span className="font-semibold">Actores Principales:</span>
-                                        </div>
-                                        <div className="flex flex-col space-y-1">
-                                         {book.data.material.map((material)=>(
-                                                <div key={material.id}  className="flex items-center gap-2 py-1 px-2 text-sm">
-                                                    <Star className="h-4 w-4 text-secondary" />
-                                                    <span className="text-muted-foreground">
-                                                        {`${material.name}`}
-                                                    </span>
-                                                </div>
-                                         ))}
-                                        </div>
-                                    </div>
-                                )} */}
                                 {book?.data?.material && (
                                 <div>
                                     <div className="flex items-center gap-4 mb-2">
-                                    <BookDashed className="h-5 w-5 text-primary" />
+                                    <Star className="h-5 w-5 text-primary" />
                                     <span className="font-semibold">Material:</span>
                                     </div>
 
                                     <div className="flex items-center gap-2 py-1 px-2 text-sm">
-                                    <BookDashed className="h-4 w-4 text-secondary" />
+                                    <Star className="h-4 w-4 text-secondary" />
                                     <span className="text-muted-foreground">
                                         {book.data.material.name}
                                     </span>
@@ -187,7 +156,7 @@ export function DetailBook() {
                                 </div>
                                 )}
 
-                            </div>
+                            </div> */}
                         </CardContent>
                     </Card>
                 </div>
@@ -203,4 +172,4 @@ export function DetailBook() {
         </div>
 
     );
-}
+ }
