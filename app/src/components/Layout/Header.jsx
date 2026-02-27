@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Layers,
-  Film,
+  Book,
   ChartArea,
   Filter,
   Wrench,
@@ -13,7 +13,7 @@ import {
   Menu,
   X,
   ChevronDown,
-  Clapperboard,
+  BookOpen,
   User,
   ShoppingBasket
 } from "lucide-react";
@@ -36,7 +36,7 @@ export default function Header() {
   const userEmail = "Invitado";
 
 const navItems = [
-  { title: "Libros", href: "/book", icon: <Film className="h-4 w-4" /> },
+  { title: "Mis Libros", href: "/book", icon: <Book className="h-4 w-4" /> },
   {
     title: "Filtrar Libros",
     href: "/book/filter",
@@ -49,6 +49,11 @@ const mantItems = [
       title: "Libros",
       href: "book/table",
       icon: <Wrench className="h-4 w-4" />,
+    },
+    {
+      title: "Usuarios",
+      href: "user/table",
+      icon: <User className="h-4 w-4" />,
     },
     {
       title: "Subastas",
@@ -84,8 +89,8 @@ const userItems = [
           to="/"
           className="flex items-center gap-2 text-xl font-semibold tracking-wide hover:opacity-90 transition"
         >
-          <Clapperboard className="h-6 w-6" />
-          <span className="hidden sm:inline">SubasApp</span>
+          <BookOpen className="h-6 w-6" />
+          <span className="hidden sm:inline">El Rincón del Lextor</span>
         </Link>
 
         {/* -------- Menú escritorio -------- */}
@@ -94,7 +99,7 @@ const userItems = [
             {/* Libros */}
             <MenubarMenu>
               <MenubarTrigger className="text-white font-medium flex items-center gap-1 hover:text-secondary transition">
-                <Film className="h-4 w-4" /> Libros
+                <Book className="h-4 w-4" /> Libros
                 <ChevronDown className="h-3 w-3" />
               </MenubarTrigger>
               <MenubarContent className="bg-primary/0 backdrop-blur-md border-white/10">
@@ -177,13 +182,13 @@ const userItems = [
               <nav className="mt-8 px-4 space-y-6">
                 <div>
                   <Link to="/" className="flex items-center gap-2 text-lg font-semibold">
-                    <Clapperboard /> MoviesApp
+                    <BookOpen /> El Rincón del Lector
                   </Link>
                 </div>
 
                 <div>
                   <h4 className="mb-2 text-lg font-semibold flex items-center gap-2">
-                    <Film /> Películas
+                    <Book /> Películas
                   </h4>
                   {navItems.map((item) => (
                     <Link

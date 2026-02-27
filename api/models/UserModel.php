@@ -10,10 +10,17 @@ class UserModel
 
 	public function all()
 	{
+		$rolM = new RolModel();
 		//Consulta sql
 		$vSql = "SELECT * FROM user;";
 		//Ejecutar la consulta
 		$vResultado = $this->enlace->ExecuteSQL($vSql);
+		if(!empty($vResultado) && is_array($vResultado)){
+            for ($i=0; $i < count($vResultado); $i++) { 
+                //Rol - roles
+                $vResultado[$i]->rol=$rolM->get($vResultado[$i]->rol_id);
+            }
+        }
 		// Retornar el objeto
 		return $vResultado;
 	}

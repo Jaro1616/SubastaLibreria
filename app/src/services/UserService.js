@@ -8,6 +8,19 @@ class UserService {
   getUserById(UserId) {
     return axios.get(BASE_URL + '/' + UserId);
   }
+
+  getAdminById() {
+    return axios.allAdmin(BASE_URL);
+  }
+
+  getSellerById() {
+    return axios.allSeller(BASE_URL);
+  }
+
+  getBuyerById() {
+    return axios.allBuyer(BASE_URL);
+  }
+  /*
   getAllCustomer() {
     return axios.get(BASE_URL + '/allCustomer/');
   }
@@ -19,7 +32,7 @@ class UserService {
   }
   loginUser(User) {
     return axios.post(BASE_URL + '/login/', JSON.stringify(User));
-  }
+  }*/
 }
 
 export default new UserService();

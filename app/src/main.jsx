@@ -8,6 +8,7 @@ import { PageNotFound } from './components/Home/PageNotFound'
 import TableMovies from './components/Book/TableMovies'
 import { ListBooks } from './components/Book/ListBooks'
 import { DetailBook } from './components/Book/DetailBook'
+import TableUsers from './components/User/TableUsers'
 
 const rutas = createBrowserRouter([
   {
@@ -22,7 +23,9 @@ const rutas = createBrowserRouter([
        //Rutas componentes
       {path:"book/table", element: <TableMovies/>},
       {path:"book", element: <ListBooks/>},
-      {path:"book/detail/:id", element: <DetailBook />}
+      {path:"book/detail/:id", element: <DetailBook />},
+
+      {path:"user/table", element: <TableUsers/>},
 
     ]
   }

@@ -16,7 +16,7 @@ class book
             $response->toJSON($result);
             handleException($e);
         }
-    }
+    }   
 
     //GET Obtener 
     //http://localhost:81/SubastaLibreria/api/book/1
