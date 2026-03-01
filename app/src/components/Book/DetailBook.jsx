@@ -46,8 +46,10 @@ export function DetailBook() {
                 setLoading(false);
             }
         };
-        fetchData(id)
+
+        fetchData(id);
     }, [id]);
+
 
 
     if (loading) return <LoadingGrid count={1} type="grid" />;
@@ -152,25 +154,6 @@ export function DetailBook() {
                                         </div>
                                     </div>
                                 )}
-
-                                {/* {book.data.material && book.data.material.length > 0 && (
-                                    <div>
-                                        <div className="flex items-center gap-4 mb-2">
-                                            <Star className="h-5 w-5 text-primary" />
-                                            <span className="font-semibold">Actores Principales:</span>
-                                        </div>
-                                        <div className="flex flex-col space-y-1">
-                                         {book.data.material.map((material)=>(
-                                                <div key={material.id}  className="flex items-center gap-2 py-1 px-2 text-sm">
-                                                    <Star className="h-4 w-4 text-secondary" />
-                                                    <span className="text-muted-foreground">
-                                                        {`${material.name}`}
-                                                    </span>
-                                                </div>
-                                         ))}
-                                        </div>
-                                    </div>
-                                )} */}
                                 {book?.data?.material && (
                                 <div>
                                     <div className="flex items-center gap-4 mb-2">
@@ -186,7 +169,22 @@ export function DetailBook() {
                                     </div>
                                 </div>
                                 )}
+                            </div>
 
+                            <div>
+                                <div className="flex items-center gap-4 mb-2">
+                                <BookDashed className="h-5 w-5 text-primary" />
+                                <span className="font-semibold">Registro de subastas:</span>
+                                </div>
+
+                                <div className="flex items-center gap-2 py-1 px-2 text-sm">
+                                <span className="text-muted-foreground">
+                                    - Identificador de la subasta: {book.data.auction.id}
+                                    <br />- Fecha de inicio: {book.data.auction.start_date}
+                                    <br />- Fecha de cierre: {book.data.auction.end_date}
+                                    <br />- Estado de la subasta: {book.data.auction.status}
+                                </span>
+                                </div>
                             </div>
                         </CardContent>
                     </Card>

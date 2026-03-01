@@ -14,6 +14,7 @@ class BookModel
         $materialB = new MaterialModel();
         $editionB = new EditionModel();
         $userB = new UserModel();
+        $auctionB = new AuctionModel();
         //Consulta SQL
         $vSQL = "SELECT * FROM book order by id desc;";
         //Ejecutar la consulta
@@ -30,6 +31,8 @@ class BookModel
                 $vResultado[$i]->editions=$editionB->get($vResultado[$i]->edition_id);
                 //Vendedor - seller
                 $vResultado[$i]->seller=$userB->get($vResultado[$i]->seller_id);
+                //Subasta - auction
+                $vResultado[$i]->auction=$auctionB->getAuctionByBook($vResultado[$i]->id);
             }
         }
         //Retornar la respuesta
@@ -43,6 +46,7 @@ class BookModel
         $materialB = new MaterialModel();
         $editionB = new EditionModel();
         $userB = new UserModel();
+        $auctionB = new AuctionModel();
         //Consulta SQL
         $vSql = "SELECT * FROM book
                     where id=$id;";
@@ -60,6 +64,8 @@ class BookModel
             $vResultado->edition=$editionB->get($vResultado->edition_id);
             //Vendedor - seller
             $vResultado->seller=$userB->get($vResultado->seller_id);
+            //Subasta - auction
+            $vResultado->auction=$auctionB->getAuctionByBook($id);
         }
         //Retornar la respuesta
         return $vResultado;

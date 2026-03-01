@@ -1,13 +1,14 @@
 <?php
-class actor
+class auction
 {
-    public function index()
+    //http://localhost:81/SubastaLibreria/api/auction
+    public function index()//todos los generos
     {
         try {
             $response = new Response();
             //Obtener el listado del Modelo
-            $actor = new ActorModel();
-            $result = $actor->all();
+            $auction = new AuctionModel();
+            $result = $auction->all();
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
@@ -16,12 +17,14 @@ class actor
             
         }
     }
-    public function get($param)
+
+    //http://localhost:81/SubastaLibreria/api/auction/1
+    public function get($param)//genero por id
     {
         try {
             $response = new Response();
-            $actor = new ActorModel();
-            $result = $actor->get($param);
+            $auction = new AuctionModel();
+            $result = $auction->get($param);
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
@@ -30,32 +33,19 @@ class actor
             
         }
     }
-    public function getActorMovie($id)
+
+    //http://localhost:81/SubastaLibreria/api/auction/getAuctionByBook/1
+    public function getAuctionByBook($param)//genero por id
     {
         try {
             $response = new Response();
-            $actor = new ActorModel();
-            $result = $actor->getActorMovie($id);
+            $auction = new AuctionModel();
+            $result = $auction->getAuctionByBook($param);
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
             $response->toJSON($result);
             handleException($e);
-            
-        }
-    }
-    public function getActorMoviesRol($param)
-    {
-        try {
-            $response = new Response();
-            $actor = new ActorModel();
-            $result = $actor->getActorMoviesRol($param);
-            //Dar respuesta
-            $response->toJSON($result);
-        } catch (Exception $e) {
-            $response->toJSON($result);
-            handleException($e);
-            
         }
     }
 }

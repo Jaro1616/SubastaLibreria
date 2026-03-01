@@ -1,32 +1,29 @@
 <?php
-class RentalMovieModel
+class BidModel
 {
     public $enlace;
     public function __construct()
     {
-
         $this->enlace = new MySqlConnect();
     }
+    /*Listar */
     public function all()
     {
         //Consulta sql
-        $vSql = "SELECT * FROM rental_movie;";
+        $vSql = "SELECT * FROM bid;";
         //Ejecutar la consulta
         $vResultado = $this->enlace->ExecuteSQL($vSql);
         // Retornar el objeto
         return $vResultado;
     }
-
-    public function getRental($idRental)
+    /*Obtener */
+    public function get($id)
     {
         //Consulta sql
-        $vSql = "SELECT rm.movie_id, rm.price, rm.days,rm.subtotal, m.title 
-                    FROM rental_movie rm, movie m
-                    where m.id=rm.movie_id
-                    and rm.rental_id=$idRental";
-
+        $vSql = "SELECT * FROM bid where id=$id";
         //Ejecutar la consulta
         $vResultado = $this->enlace->ExecuteSQL($vSql);
-        return $vResultado;
+        // Retornar el objeto
+        return $vResultado[0];
     }
 }

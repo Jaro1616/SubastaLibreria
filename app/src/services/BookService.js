@@ -14,25 +14,5 @@ class BookService {
   getBookById(BookId){
     return axios.get(BASE_URL+'/'+BookId);
   }
-  
-  /*
-  //Obtener peliculas por tienda
-  //http://localhost:81/appmovie/api/movie/moviesByShopRental/1
-  getMovieByShopRental(ShopRentalId){
-    return axios.get(BASE_URL+'/moviesByShopRental/'+ShopRentalId);
-  }
-  createMovie(Movie) {
-    return axios.post(BASE_URL, JSON.stringify(Movie));
-  }
-  
-  updateMovie(Movie) {
-    return axios({
-      method: 'put',
-      url: BASE_URL,
-      data: JSON.stringify(Movie)
-
-    })
-  }
-  */
 }
 export default new BookService();

@@ -1,13 +1,14 @@
 <?php
-class director
+class bid
 {
-    public function index()
+    //http://localhost:81/SubastaLibreria/api/bid
+    public function index()//todos los generos
     {
         try {
             $response = new Response();
             //Obtener el listado del Modelo
-            $genero = new DirectorModel();
-            $result = $genero->all();
+            $bid = new BidModel();
+            $result = $bid->all();
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
@@ -16,12 +17,14 @@ class director
             
         }
     }
-    public function get($param)
+
+    //http://localhost:81/SubastaLibreria/api/bid/1
+    public function get($param)//genero por id
     {
         try {
             $response = new Response();
-            $genero = new DirectorModel();
-            $result = $genero->get($param);
+            $bid = new BidModel();
+            $result = $bid->get($param);
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
