@@ -27,6 +27,7 @@ const userColumns = [
     { key: "name", label: "Nombre" },
     { key: "rol", label: "Rol" },
     { key: "state", label: "Estado" },
+    { key: "", label: "Acciones" },
 ];
 
 export default function TableUsers() {
@@ -63,7 +64,7 @@ export default function TableUsers() {
     return <EmptyState message="No se encontraron usuarios." />; 
 
     return (
-        <div className="container mx-auto py-8">
+        <div className="container mx-auto py-10">
             <div className="flex items-center justify-between mb-6">
                 <h1 className="text-3xl font-bold tracking-tight">
                     Listado de Usuarios
@@ -97,7 +98,7 @@ export default function TableUsers() {
                     </TableHeader>
                     <TableBody>
                         {users.map((user)=>( 
-                            <TableRow key={user.id}>
+                            <TableRow key={user.id} /*className="h-16" - ESTO ME SIRVE PARA HACER MÁS ANCHA LA CELDA*/>
                                 <TableCell className="font-medium">{user.name} </TableCell>
                                 <TableCell>{user.rol.name} </TableCell>
                                 <TableCell>{user.active ? "Activo" : "Inactivo"} </TableCell>

@@ -10,6 +10,8 @@ import { ListBooks } from './components/Book/ListBooks'
 import { DetailBook } from './components/Book/DetailBook'
 import TableUsers from './components/User/TableUsers'
 import DetailUser from './components/User/DetailUser'
+import TableAuction from './components/Auction/TableAuction'
+import TableAuctions from './components/Auction/TableAuctions'
 
 const rutas = createBrowserRouter([
   {
@@ -29,6 +31,10 @@ const rutas = createBrowserRouter([
       //Rutas User
       {path:"user/table", element: <TableUsers/>},
       {path:"user/detail/:id", element: <DetailUser />},
+
+      //Eutas Auction
+      {path:"auction/table", element: <TableAuction/>},
+      {path:"/auction/prueba", element: <TableAuctions/>},
     ]
   }
 ])

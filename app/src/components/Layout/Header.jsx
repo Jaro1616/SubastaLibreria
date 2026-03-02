@@ -51,17 +51,17 @@ const mantItems = [
     },
     {
       title: "Usuarios",
-      href: "user/table",
+      href: "/user/table",
       icon: <User className="h-4 w-4" />,
     },
     {
       title: "Subastas",
-      href: "auction",
+      href: "/auction/table",
       icon: <ShoppingBasket className="h-4 w-4" />,
     },
-    {
-      title: "Gráfico de Subastas",
-      href: "/auction/graph",
+   {
+      title: "PRUEBA",
+      href: "/auction/prueba",
       icon: <ChartArea className="h-4 w-4" />,
     },
 ];

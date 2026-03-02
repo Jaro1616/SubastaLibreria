@@ -14,7 +14,8 @@ import {
     ChevronRight,
     ArrowLeft,
     User,
-    Calendar
+    Calendar,
+    List
 } from "lucide-react";
 import { LoadingGrid } from '../ui/custom/LoadingGrid';
 import { EmptyState } from '../ui/custom/EmptyState';
@@ -173,7 +174,7 @@ export function DetailBook() {
 
                             <div>
                                 <div className="flex items-center gap-4 mb-2">
-                                <BookDashed className="h-5 w-5 text-primary" />
+                                <List className="h-5 w-5 text-primary" />
                                 <span className="font-semibold">Registro de subastas:</span>
                                 </div>
 
