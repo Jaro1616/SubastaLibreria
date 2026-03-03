@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
     Table,
     TableHeader,
@@ -11,6 +13,7 @@ import { FilmIcon } from "lucide-react";
 
 export default function TableActiveAuctions({ auctions }) {
 const BASE_URL = import.meta.env.VITE_BASE_URL + "uploads";
+const navigate = useNavigate();
 
 if (!auctions || auctions.length === 0) {
     return (
@@ -28,8 +31,10 @@ return (
         <TableHead>Objeto</TableHead>
         <TableHead>Fecha inicio</TableHead>
         <TableHead>Fecha cierre estimado</TableHead>
-        <TableHead>Incremento mínimo</TableHead>
+        <TableHead>Precio base</TableHead>
+        <TableHead>Incremento minimo</TableHead>
         <TableHead>Pujas</TableHead>
+        <TableHead>Acciones</TableHead>
         </TableRow>
     </TableHeader>
 
@@ -66,7 +71,12 @@ return (
             {auction.end_date}
             </TableCell>
 
-            {/* Incremento */}
+            {/* Precio base */}
+            <TableCell className="text-lg">
+            ₡ {auction.base_price}
+            </TableCell>
+
+            {/* Incremento mínimo */}
             <TableCell className="text-lg">
             ₡ {auction.min_increment}
             </TableCell>
@@ -75,6 +85,16 @@ return (
             <TableCell className="text-lg font-semibold">
             {auction.pujas_realizadas}
             </TableCell>
+
+            <TableCell>
+                    <Button
+                        type="button"
+                        onClick={() => navigate(`/auction/detail/${auction.id}`)}
+                        className="px-4 py-2 bg-accent text-white hover:bg-accent/90"
+                    >
+                        Detalle
+                    </Button>
+                </TableCell>
         </TableRow>
         ))}
     </TableBody>

@@ -59,11 +59,11 @@ const mantItems = [
       href: "/auction/table",
       icon: <ShoppingBasket className="h-4 w-4" />,
     },
-   {
+/*    {
       title: "PRUEBA",
       href: "/auction/prueba",
       icon: <ChartArea className="h-4 w-4" />,
-    },
+    }, */
 ];
 
 const userItems = [

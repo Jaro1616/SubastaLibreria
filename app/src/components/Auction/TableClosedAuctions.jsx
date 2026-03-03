@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
     Table,
     TableHeader,
@@ -11,6 +13,7 @@ import {
 
     export default function TableClosedAuctions({ auctions }) {
     const BASE_URL = import.meta.env.VITE_BASE_URL + "uploads";
+    const navigate = useNavigate();
 
     if (!auctions || auctions.length === 0) {
         return (
@@ -28,7 +31,9 @@ import {
             <TableHead>Objeto</TableHead>
             <TableHead>Fecha cierre</TableHead>
             <TableHead>Pujas recibidas</TableHead>
+            <TableHead>Precio base</TableHead>
             <TableHead>Estado final</TableHead>
+            <TableHead>Acciones</TableHead>
             </TableRow>
         </TableHeader>
 
@@ -65,9 +70,24 @@ import {
                 {auction.pujas_realizadas}
                 </TableCell>
 
+                {/* Precio base */}
+                <TableCell className="text-lg font-semibold">
+                ₡ {auction.base_price}
+                </TableCell>
+
                 {/* Estado final obligatorio */}
                 <TableCell className="text-lg">
                 {auction.final_state || "Finalizada"}
+                </TableCell>
+
+                <TableCell>
+                    <Button
+                        type="button"
+                        onClick={() => navigate(`/auction/detail/${auction.id}`)}
+                        className="px-4 py-2 bg-accent text-white hover:bg-accent/90"
+                    >
+                        Detalle
+                    </Button>
                 </TableCell>
             </TableRow>
             ))}
