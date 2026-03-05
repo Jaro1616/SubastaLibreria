@@ -12,6 +12,7 @@ import TableUsers from './components/User/TableUsers'
 import DetailUser from './components/User/DetailUser'
 import TableAuctions from './components/Auction/TableAuctions'
 import DetailAuction from './components/Auction/DetailAuction'
+import DetailBid from './components/Auction/Bid/DetailBid'
 
 const rutas = createBrowserRouter([
   {
@@ -32,9 +33,13 @@ const rutas = createBrowserRouter([
       {path:"user/table", element: <TableUsers/>},
       {path:"user/detail/:id", element: <DetailUser />},
 
-      //Eutas Auction
+      //Rutas Auction
       {path:"auction/table", element: <TableAuctions/>},
       {path:"auction/detail/:id", element: <DetailAuction/>},
+
+      //Rutas Bid
+      {path:"auction/bid/detail/:id", element: <DetailBid/>}
+      
     ]
   }
 ])

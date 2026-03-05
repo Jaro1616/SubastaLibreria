@@ -146,6 +146,16 @@ export default function DetailAuction() {
                                     </span>
                                     </div>
                                 </div>
+
+                                <div>
+                                    <Button
+                                        type="button"
+                                        onClick={() => navigate(`/auction/bid/detail/${auction.data.id}`)}
+                                        className="px-4 py-2 bg-accent text-white hover:bg-accent/90"
+                                    >
+                                        Ver Pujas
+                                    </Button>
+                                </div>
                             </div>
                         </CardContent>
                     </Card>

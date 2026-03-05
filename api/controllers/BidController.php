@@ -19,12 +19,28 @@ class bid
     }
 
     //http://localhost:81/SubastaLibreria/api/bid/1
-    public function get($param)//genero por id
+    public function get($param)
     {
         try {
             $response = new Response();
             $bid = new BidModel();
             $result = $bid->get($param);
+            //Dar respuesta
+            $response->toJSON($result);
+        } catch (Exception $e) {
+            $response->toJSON($result);
+            handleException($e);
+            
+        }
+    }
+
+    //http://localhost:81/SubastaLibreria/api/bid/getBidByAuction/1
+    public function getBidByAuction($param)
+    {
+        try {
+            $response = new Response();
+            $bid = new BidModel();
+            $result = $bid->getBidByAuction($param);
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {

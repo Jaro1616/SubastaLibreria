@@ -143,8 +143,7 @@ export function DetailBook() {
                                             <span className="font-semibold">Géneros:</span>
                                         </div>
                                         <div className="flex flex-col space-y-1">
-                                            
-                                                {book.data.genres.map((genre)=>(
+                                            {book.data.genres.map((genre)=>(
                                                 <div key={genre.id}  className="flex items-center gap-2 py-1 px-2 text-sm">
                                                     <ChevronRight className="h-4 w-4 text-secondary" />
                                                     <span className="text-muted-foreground">
