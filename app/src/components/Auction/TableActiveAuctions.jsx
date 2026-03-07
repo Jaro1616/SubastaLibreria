@@ -81,7 +81,7 @@ return (
             ₡ {auction.min_increment}
             </TableCell>
 
-            {/* Campo calculado obligatorio */}
+            {/* Campo calculado */}
             <TableCell className="text-lg font-semibold">
             {auction.pujas_realizadas}
             </TableCell>

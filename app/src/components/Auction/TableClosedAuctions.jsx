@@ -75,7 +75,7 @@ import {
                 ₡ {auction.base_price}
                 </TableCell>
 
-                {/* Estado final obligatorio */}
+                {/* Estado final */}
                 <TableCell className="text-lg">
                 {auction.final_state || "Finalizada"}
                 </TableCell>

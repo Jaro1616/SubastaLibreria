@@ -37,14 +37,6 @@ export function ListCardBooks({ data }) {
                 <FilmIcon className="h-1/2 w-1/2" />
               </div>
             )}
-            {/* {isShopping && item.price && (
-              <Badge
-                variant="secondary"
-                className="absolute top-2 right-2 text-base font-bold bg-primary text-primary-foreground"
-              >
-                ₡{parseFloat(item.price).toFixed(2)} colones
-              </Badge>
-            )} */}
           </div>
 
           {/* Contenido */}
@@ -79,20 +71,6 @@ export function ListCardBooks({ data }) {
                 <TooltipContent>Ver detalle</TooltipContent>
               </Tooltip>
             </TooltipProvider>
-
-            {/* {isShopping && (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button size="icon" className="size-8"
-                    >
-                      <ShoppingCart />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Agregar al carrito</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            )} */}
           </div>
         </Card>
       ))}

@@ -118,45 +118,6 @@ export default function DetailUser() {
                                 </div>
                                 )}
                             </div>
-
-{/*                             //Contenedor de dos columnas para géneros y materiales
-                            <div className="grid gap-4 md:grid-cols-2">
-                            {book.data.genres && book.data.genres.length > 0 && ( 
-                                    <div>
-                                        <div className="flex items-center gap-4 mb-2">
-                                            <Film className="h-5 w-5 text-primary" />
-                                            <span className="font-semibold">Géneros:</span>
-                                        </div>
-                                        <div className="flex flex-col space-y-1">
-                                            
-                                                {book.data.genres.map((genre)=>(
-                                                <div key={genre.id}  className="flex items-center gap-2 py-1 px-2 text-sm">
-                                                    <ChevronRight className="h-4 w-4 text-secondary" />
-                                                    <span className="text-muted-foreground">
-                                                        {genre.title}
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                                {book?.data?.material && (
-                                <div>
-                                    <div className="flex items-center gap-4 mb-2">
-                                    <Star className="h-5 w-5 text-primary" />
-                                    <span className="font-semibold">Material:</span>
-                                    </div>
-
-                                    <div className="flex items-center gap-2 py-1 px-2 text-sm">
-                                    <Star className="h-4 w-4 text-secondary" />
-                                    <span className="text-muted-foreground">
-                                        {book.data.material.name}
-                                    </span>
-                                    </div>
-                                </div>
-                                )}
-
-                            </div> */}
                         </CardContent>
                     </Card>
                 </div>
@@ -172,4 +133,4 @@ export default function DetailUser() {
         </div>
 
     );
- }
+}

@@ -53,7 +53,7 @@ export default function DetailBid() {
 
                 {/* Sección de los Detalles */}
                 <div className="flex-1 space-y-6">
-                    {/* Nombre del usuario */}
+                    {/* Título */}
                     <div>
                         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
                             PUJAS REALIZADAS EN LA SUBASTA:
@@ -62,7 +62,7 @@ export default function DetailBid() {
                     {bid.data.map((bidItem)=>(
                         <Card key={bidItem.id}>
                             <CardContent className="p-6 space-y-6">
-                                {/* Información de edicion, descipcion e isbn en una sola fila */}
+                                {/* Información de Usuario, monto y fecha en una sola fila */}
                                 <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
                                     {/* Usuario */}
                                     <div className="flex items-center gap-4">

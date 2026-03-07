@@ -68,7 +68,7 @@ export default function TableAuctions() {
             </h1>
 
             <div className="flex items-center gap-4">
-            {/* Combo filtro */}
+            {/* Combo */}
             <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}

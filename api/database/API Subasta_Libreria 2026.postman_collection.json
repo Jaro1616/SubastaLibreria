@@ -1,0 +1,622 @@
+{
+  "info": {
+    "_postman_id": "d8011be5-2318-4426-bd8e-c623ec186d10",
+    "name": "API Subasta_Libreria 2026",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52080062"
+  },
+  "item": [
+    {
+      "name": "Rol",
+      "item": [
+        {
+          "name": "Lista Roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/rol",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "rol"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Rol",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/rol/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "rol",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Rol de Usuario",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/rol/getRolUser/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "rol",
+                "getRolUser",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Lista Usuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/user",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Usuario",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/user/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "user",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Usuarios Admin",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/user/allAdmin",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "user",
+                "allAdmin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Usuarios Seller",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/user/allSeller",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "user",
+                "allSeller"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Usuarios Buyer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/user/allBuyer",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "user",
+                "allBuyer"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Image",
+      "item": [
+        {
+          "name": "Obtener Imagen",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/image/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "image",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/image",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "image"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Genre",
+      "item": [
+        {
+          "name": "Lista Generos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/genre",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "genre"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Genero",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/genre/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "genre",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Genero de Libro",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/genre/getGenreBook/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "genre",
+                "getGenreBook",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Libros por Genero",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/genre/getBooksbyGenre/14",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "genre",
+                "getBooksbyGenre",
+                "14"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Material",
+      "item": [
+        {
+          "name": "Lista Materiales",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/material",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "material"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Material",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/material/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "material",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Edition",
+      "item": [
+        {
+          "name": "Lista Ediciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/edition",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "edition"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Edicion",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/edition/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "edition",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Book",
+      "item": [
+        {
+          "name": "Lista Libros",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/book",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "book"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Libro",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/book/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "book",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bid",
+      "item": [
+        {
+          "name": "Lista Pujas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/bid",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "bid"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Puja",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/bid/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "bid",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Pujas por Subasta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:81/SubastaLibreria/api/bid/getBidByAuction/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "bid",
+                "getBidByAuction",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auction",
+      "item": [
+        {
+          "name": "Lista Subastas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/auction",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "auction"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Subasta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/auction/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "auction",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Subasta por Libro",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:81/SubastaLibreria/api/auction/getAuctionByBook/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "81",
+              "path": [
+                "SubastaLibreria",
+                "api",
+                "auction",
+                "getAuctionByBook",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
