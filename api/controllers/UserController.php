@@ -58,40 +58,24 @@ class user
         $response->toJSON($result);
     }
 
-    /* ESTAS FUNCIONES AUN NO SE UTILIZAN
-    public function customerbyShopRental($idShopRental)
+    //http://localhost:81/SubastaLibreria/api/user/update
+    public function update()
     {
-        $response = new Response();
-        //Obtener el listado del Modelo
-        $usuario = new UserModel();
-        $result = $usuario->customerbyShopRental($idShopRental);
-        //Dar respuesta
-        $response->toJSON($result);
-    }
-    public function login()
-    {
-        $response = new Response();
-        $request = new Request();
-        //Obtener json enviado
-        $inputJSON = $request->getJSON();
-        $usuario = new UserModel();
-        $result = $usuario->login($inputJSON);
-        if (isset($result) && !empty($result) && $result != false) {
+        try {
+            $request = new Request();
+            $response = new Response();
+            //Obtener json enviado
+            $inputJSON = $request->getJSON();
+            //Instancia del modelo
+            $usuario = new UserModel();
+            //Acción del modelo a ejecutar
+            $result = $usuario->update($inputJSON);
+            //Dar respuesta
             $response->toJSON($result);
-        } else {
-            $response->toJSON($response, "Usuario no valido");
+        } catch (Exception $e) {
+            $response->toJSON($result);
+            handleException($e);
+            
         }
     }
-    public function create()
-    {
-        $response = new Response();
-        $request = new Request();
-        //Obtener json enviado
-        $inputJSON = $request->getJSON();
-        $usuario = new UserModel();
-        $result = $usuario->create($inputJSON);
-        //Dar respuesta
-        $response->toJSON($result);
-    }
-    */
 }

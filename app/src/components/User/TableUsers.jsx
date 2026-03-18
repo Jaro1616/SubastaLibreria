@@ -56,7 +56,7 @@ export default function TableUsers() {
         };
         fetchData()
 
-     }, []);
+    }, []);
 
     if (loading) return <LoadingGrid type="grid" />; 
     if (error) return <ErrorAlert title="Error al cargar usuarios" message={error} />; 
@@ -119,7 +119,9 @@ export default function TableUsers() {
                                         <Tooltip>
                                             <TooltipTrigger asChild>
                                                 <Button variant="ghost" size="icon" >
-                                                    <Edit className="h-4 w-4 text-primary" />
+                                                    <Link to={`/user/update/${user.id}`}>
+                                                        <Edit className="h-4 w-4 text-detail" />
+                                                    </Link>
                                                 </Button>
                                             </TooltipTrigger>
                                             <TooltipContent>Actualizar</TooltipContent>
@@ -147,7 +149,7 @@ export default function TableUsers() {
                 onClick={() => navigate("/")}
                 className="flex items-center gap-2 bg-accent text-white hover:bg-accent/90 mt-6"
             >
-                <ArrowLeft x className="w-4 h-4" />
+                <ArrowLeft className="w-4 h-4" />
                 Regresar
             </Button>
         </div>

@@ -20,19 +20,15 @@ class UserService {
   getBuyerById() {
     return axios.allBuyer(BASE_URL);
   }
-  /*
-  getAllCustomer() {
-    return axios.get(BASE_URL + '/allCustomer/');
+
+  updateUser(User) {
+    return axios({
+      method: 'put',
+      url: BASE_URL,
+      data: JSON.stringify(User)
+    })
   }
-  getCustomerbyShopRental(ShopRentalId) {
-    return axios.get(BASE_URL + '/customerbyShopRental/'+ ShopRentalId);
-  }
-  createUser(User) {
-    return axios.post(BASE_URL, JSON.stringify(User));
-  }
-  loginUser(User) {
-    return axios.post(BASE_URL + '/login/', JSON.stringify(User));
-  }*/
+
 }
 
 export default new UserService();

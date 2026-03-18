@@ -36,7 +36,6 @@ class BidModel
         //Ejecutar la consulta
         $vResultado = $this->enlace->ExecuteSQL($vSql);
 
-
         if(!empty($vResultado) && is_array($vResultado)){
             for ($i=0; $i < count($vResultado); $i++) { 
                 

@@ -78,7 +78,18 @@ class UserModel
 		return $vResultado;
 	}
 
-	//LO DE LAS SUBASTAS
+	public function update($objeto)
+	{
+		//Consulta sql
+        $sql = "Update user SET name ='$objeto->name'," .
+            "email ='$objeto->email', active = $objeto->active" .
+            " Where id =$objeto->id";
+		//Ejecutar la consulta
+        $cResults = $this->enlace->executeSQL_DML($sql);
+		return $this->get($objeto->id);
+	}
+
+	//VALIDACIONES Y DATOS EXTRA
 	public function countSubastasCreadas($userId)
 	{
 		$sql = "
