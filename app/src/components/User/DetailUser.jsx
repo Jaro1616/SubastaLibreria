@@ -82,7 +82,7 @@ export default function DetailUser() {
                                     <ShieldCheck className="h-5 w-5 text-primary" />
                                     <span className="font-semibold">Estado:</span>
                                     <p className="text-muted-foreground">
-                                        {user.data.active ? "Activo" : "Inactivo"}
+                                        {user.data.active == 1 ? "Activo" : "Inactivo"}
                                     </p>
                                 </div>
                                 {/* descripcion */}

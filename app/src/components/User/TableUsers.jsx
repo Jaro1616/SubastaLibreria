@@ -101,7 +101,7 @@ export default function TableUsers() {
                             <TableRow key={user.id} /*className="h-16" - ESTO ME SIRVE PARA HACER MÁS ANCHA LA CELDA*/>
                                 <TableCell className="font-medium">{user.name} </TableCell>
                                 <TableCell>{user.rol.name} </TableCell>
-                                <TableCell>{user.active ? "Activo" : "Inactivo"} </TableCell>
+                                <TableCell>{user.active == 1 ? "Activo" : "Inactivo"} </TableCell>
                                 <TableCell className="flex justify-start items-center gap-1">
                                     <TooltipProvider>
                                         <Tooltip>
