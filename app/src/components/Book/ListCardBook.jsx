@@ -74,7 +74,7 @@ export function ListCardBooks({ data }) {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button
+                  <Button disabled={!item.isEditable}
                     size="icon" className="size-8"
                   >
                     <Link to={`/book/edit/`}>
@@ -88,7 +88,7 @@ export function ListCardBooks({ data }) {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button
+                  <Button disabled={!item.isDeletable}
                     variant="destructive" size="icon" className="size-8"
                   >
                     <Link to={`/book/delete/`}>

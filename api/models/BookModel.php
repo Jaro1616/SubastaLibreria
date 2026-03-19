@@ -33,6 +33,10 @@ class BookModel
                 $vResultado[$i]->seller=$userB->get($vResultado[$i]->seller_id);
                 //Subasta - auction
                 $vResultado[$i]->auction=$auctionB->getAuctionByBook($vResultado[$i]->id);
+                //Flags
+                $vResultado[$i]->isEditable = $vResultado[$i]->auction == null || $vResultado[$i]->auction->status == 'Closed';
+                $vResultado[$i]->isDeletable = $vResultado[$i]->auction == null;
+                //$vResultado[$i]->canToggle = $vResultado[$i]->auction == null;
             }
         }
         //Retornar la respuesta
@@ -66,6 +70,11 @@ class BookModel
             $vResultado->seller=$userB->get($vResultado->seller_id);
             //Subasta - auction
             $vResultado->auction=$auctionB->getAuctionByBook($id);
+
+            //Flags
+            $vResultado->isEditable = $vResultado->auction == null || $vResultado->auction->status == 'Closed';
+            $vResultado->isDeletable = $vResultado->auction == null;
+            //$vResultado->canToggle = $vResultado->auction == null;
         }
         //Retornar la respuesta
         return $vResultado;
