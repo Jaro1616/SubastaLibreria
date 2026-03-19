@@ -177,14 +177,20 @@ export function DetailBook() {
                                 <span className="font-semibold">Registro de subastas:</span>
                                 </div>
 
-                                <div className="flex items-center gap-2 py-1 px-2 text-sm">
-                                <span className="text-muted-foreground">
-                                    - Identificador de la subasta: {book.data.auction.id}
-                                    <br />- Fecha de inicio: {book.data.auction.start_date}
-                                    <br />- Fecha de cierre: {book.data.auction.end_date}
-                                    <br />- Estado de la subasta: {book.data.auction.status}
-                                </span>
-                                </div>
+                                {book.data.auction ? (
+                                    <div className="flex items-center gap-2 py-1 px-2 text-sm">
+                                    <span className="text-muted-foreground">
+                                        - Identificador: {book.data.auction.id}
+                                        <br />- Inicio: {book.data.auction.start_date}
+                                        <br />- Cierre: {book.data.auction.end_date}
+                                        <br />- Estado: {book.data.auction.status}
+                                    </span>
+                                    </div>
+                                ) : (
+                                    <p className="text-sm text-muted-foreground">
+                                        Este libro no tiene subasta activa
+                                    </p>
+                                )}
                             </div>
                         </CardContent>
                     </Card>

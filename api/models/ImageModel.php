@@ -12,9 +12,41 @@ class ImageModel
     //Subir imagen de una pelicula registrada
     public function uploadFile($object)
     {
-        return false;
+        $file = $object['file'];
+        $book_id = $object['book_id'];
+        //Obtener la información del archivo
+        $fileName = $file['name'];
+        $tempPath = $file['tmp_name'];
+        $fileSize = $file['size'];
+        $fileError = $file['error'];
+
+        if (!empty($fileName)) {
+            //Crear un nombre único para el archivo
+            $fileExt = explode('.', $fileName);
+            $fileActExt = strtolower(end($fileExt));
+            $fileName = "book-" . uniqid() . "." . $fileActExt;
+            //Validar el tipo de archivo
+            if (in_array($fileActExt, $this->valid_extensions)) {
+                //Validar que no exista
+                if (!file_exists($this->upload_path . $fileName)) {
+                    //Validar que no sobrepase el tamaño
+                    if ($fileSize < 2000000 && $fileError == 0) {
+                        //Moverlo a la carpeta del servidor del API
+                        if (move_uploaded_file($tempPath, $this->upload_path . $fileName)) {
+                            //Guardarlo en la BD
+                            $sql = "INSERT INTO book_image (book_id,image_path) VALUES ($book_id, '$fileName')";
+                            $vResultado = $this->enlace->executeSQL_DML($sql);
+                            if ($vResultado > 0) {
+                                return 'Imagen creada';
+                            }
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
     }
-    //Obtener una imagen de una pelicula
+    //Obtener una imagen de un libro registrado
     public function getImageBook($idBook)
     {
         //Consulta sql

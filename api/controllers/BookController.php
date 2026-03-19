@@ -36,11 +36,27 @@ class book
         }
     }
 
+    //POST Crear
+    //http://localhost:81/SubastaLibreria/api/book/create
+    public function create()
+    {
+        try {
+            $request = new Request();
+            $response = new Response();
+            //Obtener json enviado
+            $inputJSON = $request->getJSON();
+            //Instancia del modelo
+            $book = new BookModel();
+            //Acción del modelo a ejecutar
+            $result = $book->create($inputJSON);
+            //Dar respuesta
+            $response->toJSON($result);
+        } catch (Exception $e) {
+            $response->toJSON($result);
+            handleException($e);  
+        }
+    }
     
-    
-
-
-
 
     /* METDOS POR IMPLEMENTAR
      //Obtener peliculas por tienda
@@ -61,26 +77,8 @@ class book
         }
     }
     
-    //POST Crear
-    public function create()
-    {
-        try {
-            $request = new Request();
-            $response = new Response();
-            //Obtener json enviado
-            $inputJSON = $request->getJSON();
-            //Instancia del modelo
-            $movie = new MovieModel();
-            //Acción del modelo a ejecutar
-            $result = $movie->create($inputJSON);
-            //Dar respuesta
-            $response->toJSON($result);
-        } catch (Exception $e) {
-            $response->toJSON($result);
-            handleException($e);
-            
-        }
-    }
+    
+    
     //PUT actualizar
     public function update()
     {

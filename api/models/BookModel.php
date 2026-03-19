@@ -71,39 +71,30 @@ class BookModel
         return $vResultado;
     }
 
-    /* public function create($objeto){
-
-    }
-
     public function create($objeto)
     {
         //Consulta sql
         //Identificador autoincrementable
-        $sql = "Insert into movie (title, year, time, lang, director_id)" .
-            " Values ('$objeto->title','$objeto->year',
-                    '$objeto->time','$objeto->lang',$objeto->director_id)";
+        $sql = "Insert into book (title, author, isbn, publisher, year, seller_id, material_id, edition_id, description, active)" .
+            "VALUES ('$objeto->title', '$objeto->author', '$objeto->isbn', '$objeto->publisher',
+                    '$objeto->year', $objeto->seller_id, $objeto->material_id,
+                    $objeto->edition_id, '$objeto->description', 1 )";
         //Ejecutar la consulta
         //Obtener ultimo insert
-        $idMovie = $this->enlace->executeSQL_DML_last($sql);
+        $idBook = $this->enlace->executeSQL_DML_last($sql);
         //--- Generos ---
         //Crear elementos a insertar en generos
-        foreach ($objeto->genres as $value) {
-            $sql = "Insert into movie_genre(movie_id,genre_id)" .
-                " Values($idMovie,$value)";
+        foreach ($objeto->genres as $genre) {
+            $sql = "INSERT INTO book_genre (book_id, genre_id)" .
+                "VALUES ($idBook, $genre)";
             $vResultadoGen = $this->enlace->executeSQL_DML($sql);
         }
-        //--- Actores ---
-        //Crear elementos a insertar en actores
-        foreach ($objeto->actors as $item) {
-            $sql = "Insert into movie_cast(movie_id,actor_id,role)" .
-                " Values($idMovie,$item->actor_id, '$item->role')";
-            $vResultadoAct = $this->enlace->executeSQL_DML($sql);
-        }
-        //Retornar pelicula
-        return $this->get($idMovie);
+        //Retornar libro creado
+        return $this->get($idBook);
     }
 
-    public function update($objeto){
+    
+    /* public function update($objeto){
 
     }
 

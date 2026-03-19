@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import BookService from "../../services/BookService";
 import { LoadingGrid } from "../ui/custom/LoadingGrid";
 import { EmptyState } from "../ui/custom/EmptyState";
 import { ErrorAlert } from "../ui/custom/ErrorAlert";
-
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import { ListCardBooks } from "./ListCardBook";
 
 export function ListBooks() {
@@ -39,6 +47,23 @@ export function ListBooks() {
 
     return (
         <div className="mx-auto max-w-7xl p-6">
+        <div className="flex items-center justify-between mb-6">
+            <h1 className="text-3xl font-bold tracking-tight">
+                Listado de Libros
+            </h1>
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button asChild variant="outline" size="icon" className="text-primary">
+                            <Link to="/book/create">
+                                <Plus className="h-4 w-4" />
+                            </Link>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Crear Libro</TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
+        </div>
         {data && (
             <ListCardBooks data={data.data} />
         )}

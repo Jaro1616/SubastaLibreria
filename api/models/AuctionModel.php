@@ -49,7 +49,10 @@ class AuctionModel
         //Ejecutar la consulta
         $vResultado = $this->enlace->ExecuteSQL($vSql);
         // Retornar el objeto
-        return $vResultado[0];
+        if (!empty($vResultado) && is_array($vResultado)) {
+            return $vResultado[0];
+        }
+        return null;
     }
 
     public function countPujasRealizadas($auctionId)

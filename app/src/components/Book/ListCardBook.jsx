@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
-import { ScanBarcode, TextInitial, Info, FilmIcon, User } from "lucide-react";
+import { ScanBarcode, TextInitial, Info, FilmIcon, User, Edit, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -69,6 +69,34 @@ export function ListCardBooks({ data }) {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>Ver detalle</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size="icon" className="size-8"
+                  >
+                    <Link to={`/book/edit/`}>
+                      < Edit />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Editar</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="destructive" size="icon" className="size-8"
+                  >
+                    <Link to={`/book/delete/`}>
+                      < Trash2 />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Eliminar</TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </div>
