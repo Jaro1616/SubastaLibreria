@@ -57,29 +57,8 @@ class book
         }
     }
     
-
-    /* METDOS POR IMPLEMENTAR
-     //Obtener peliculas por tienda
-    public function moviesByShopRental($idShopRental)
-    {
-        try {
-            $response = new Response();
-            //Instancia del modelo
-            $movie = new MovieModel();
-            //Acción del modelo a ejecutar
-            $result = $movie->moviesByShopRental($idShopRental);
-            //Dar respuesta
-            $response->toJSON($result);
-        } catch (Exception $e) {
-            $response->toJSON($result);
-            handleException($e);
-            
-        }
-    }
-    
-    
-    
     //PUT actualizar
+    //http://localhost:81/SubastaLibreria/api/book/update
     public function update()
     {
         try {
@@ -88,35 +67,32 @@ class book
             //Obtener json enviado
             $inputJSON = $request->getJSON();
             //Instancia del modelo
-            $movie = new MovieModel();
+            $book = new BookModel();
             //Acción del modelo a ejecutar
-            $result = $movie->update($inputJSON);
+            $result = $book->update($inputJSON);
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
             $response->toJSON($result);
             handleException($e);
-            
         }
     }
 
-    //Obtener cantidad de libros por genero
-    //http://localhost:81/SubastaLibreria/api/book/countByGenre
-    public function getCountByGenre($param)
+    //PUT eliminar
+    //http://localhost:81/SubastaLibreria/api/book/delete/1
+    public function delete($id)//libro por id
     {
         try {
             $response = new Response();
             //Instancia del modelo
-            $book = new BookModel();
+            $bookM = new BookModel();
             //Acción del modelo a ejecutar
-            $result = $book->getCountByGenre($param);
+            $result = $bookM->delete($id);
             //Dar respuesta
             $response->toJSON($result);
         } catch (Exception $e) {
             $response->toJSON($result);
             handleException($e);
-            
         }
     }
-        */
 }

@@ -19,5 +19,20 @@ class BookService {
   createBook(Book) {
     return axios.post(BASE_URL, JSON.stringify(Book));
   }
+  //Actualizar libro 
+  //http://localhost:81/SubastaLibreria/api/book/update
+  updateBook(Book) {
+    return axios({
+      method: 'put',
+      url: BASE_URL,
+      data: JSON.stringify(Book)
+
+    })
+  }
+  //Eliminar libro
+  //http://localhost:81/SubastaLibreria/api/book/delete/1
+  deleteBook(BookId) {
+    return axios.delete(`${BASE_URL}/delete/${BookId}`);
+  }
 }
 export default new BookService();

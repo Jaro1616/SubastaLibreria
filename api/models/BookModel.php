@@ -16,7 +16,7 @@ class BookModel
         $userB = new UserModel();
         $auctionB = new AuctionModel();
         //Consulta SQL
-        $vSQL = "SELECT * FROM book order by id desc;";
+        $vSQL = "SELECT * FROM book WHERE active = 1 order by id desc;";
         //Ejecutar la consulta
         $vResultado = $this->enlace->ExecuteSQL($vSQL);
         if(!empty($vResultado) && is_array($vResultado)){
@@ -102,42 +102,45 @@ class BookModel
         return $this->get($idBook);
     }
 
-    
-    /* public function update($objeto){
-
-    }
 
     public function update($objeto)
     {
         //Consulta sql
-        $sql = "Update movie SET title ='$objeto->title'," .
-            "year ='$objeto->year',time ='$objeto->time',lang ='$objeto->lang'," .
-            "director_id=$objeto->director_id" .
-            " Where id=$objeto->id";
+        
+        $sql = "UPDATE book SET 
+                    title = '$objeto->title',
+                    author = '$objeto->author',
+                    isbn = '$objeto->isbn',
+                    publisher = '$objeto->publisher',
+                    year = '$objeto->year',
+                    seller_id = $objeto->seller_id,
+                    material_id = $objeto->material_id,
+                    edition_id = $objeto->edition_id,
+                    description = '$objeto->description'
+                WHERE id = $objeto->id";
+
         //Ejecutar la consulta
         $cResults = $this->enlace->executeSQL_DML($sql);
         //--- Generos ---
         //Eliminar generos asociados a la pelicula
-        $sql = "Delete from movie_genre where movie_id=$objeto->id";
+        $sql = "Delete from book_genre where book_id=$objeto->id";
         $vResultadoD = $this->enlace->executeSQL_DML($sql);
         //Insertar generos
         foreach ($objeto->genres as $item) {
-            $sql = "Insert into movie_genre(movie_id,genre_id)" .
+            $sql = "Insert into book_genre(book_id,genre_id)" .
                 " Values($objeto->id,$item)";
             $vResultadoG = $this->enlace->executeSQL_DML($sql);
-        }
-        //--- Actores ---
-        //Eliminar actores asociados a la pelicula
-        $sql = "Delete from movie_cast where movie_id=$objeto->id";
-        $vResultadoD = $this->enlace->executeSQL_DML($sql);
-        //Crear actores
-        foreach ($objeto->actors as $item) {
-            $sql = "Insert into movie_cast(movie_id,actor_id,role)" .
-                " Values($objeto->id, $item->actor_id, '$item->role')";
-            $vResultadoA = $this->enlace->executeSQL_DML($sql);
         }
 
         //Retornar pelicula
         return $this->get($objeto->id);
-    } */
+    } 
+
+    
+    public function delete($id)
+    {
+        $sql = "UPDATE book SET active = 0 WHERE id = $id";
+        return $this->enlace->executeSQL_DML($sql);
+    }
+
 }

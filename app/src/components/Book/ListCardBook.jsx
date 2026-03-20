@@ -4,6 +4,8 @@ import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/comp
 import { ScanBarcode, TextInitial, Info, FilmIcon, User, Edit, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import BookService from "../../services/BookService";   
+import { toast } from "sonner";
 
 ListCardBooks.propTypes = {
   data: PropTypes.array,
@@ -11,6 +13,28 @@ ListCardBooks.propTypes = {
 
 export function ListCardBooks({ data }) {
   const BASE_URL = import.meta.env.VITE_BASE_URL + "uploads";
+
+  // Función para manejar la eliminación de un libro con confirmación
+  function handleDelete(id) {
+    toast.warning("¿Seguro que deseas eliminar el libro?", {
+      action: {
+        label: "Eliminar",
+        onClick: () => deleteConfirmed(id),
+      },
+    });
+  }
+
+  function deleteConfirmed(id) {
+    BookService.deleteBook(id)
+      .then(() => {
+        toast.success("Libro eliminado correctamente");
+        setTimeout(() => window.location.reload(), 800);
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Ocurrió un error al eliminar");
+      });
+  }
 
   return (
     <div className="grid gap-6 p-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -77,7 +101,7 @@ export function ListCardBooks({ data }) {
                   <Button disabled={!item.isEditable}
                     size="icon" className="size-8"
                   >
-                    <Link to={`/book/edit/`}>
+                    <Link to={`/book/edit/${item.id}`}>
                       < Edit />
                     </Link>
                   </Button>
@@ -88,12 +112,14 @@ export function ListCardBooks({ data }) {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button disabled={!item.isDeletable}
-                    variant="destructive" size="icon" className="size-8"
+                  <Button 
+                    disabled={!item.isDeletable}
+                    variant="destructive" 
+                    size="icon" 
+                    className="size-8"
+                    onClick={() => handleDelete(item.id)}
                   >
-                    <Link to={`/book/delete/`}>
-                      < Trash2 />
-                    </Link>
+                    < Trash2 />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>Eliminar</TooltipContent>

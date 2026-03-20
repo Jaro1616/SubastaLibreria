@@ -169,7 +169,7 @@ export function CreateBook() {
                 {duration: 3000}
             )
             //Redireccionar al listado
-            navigate("book")
+            navigate("/book")
             }
         } 
         } catch (err) {

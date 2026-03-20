@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Toaster } from "./components/ui/sonner";
 import { Layout } from './components/Layout/Layout'
 import { Home } from './components/Home/Home'
 import { PageNotFound } from './components/Home/PageNotFound'
@@ -15,6 +16,7 @@ import DetailAuction from './components/Auction/DetailAuction'
 import DetailBid from './components/Auction/Bid/DetailBid'
 import { UpdateUser } from './components/User/UpdateUser'
 import { CreateBook } from './components/Book/CreateBook'
+import { UpdateBook } from './components/Book/UpdateBook'
 
 const rutas = createBrowserRouter([
   {
@@ -31,6 +33,7 @@ const rutas = createBrowserRouter([
       {path:"book", element: <ListBooks/>},
       {path:"/book/create", element: <CreateBook/>},
       {path:"book/detail/:id", element: <DetailBook />},
+      { path: "book/edit/:id", element: <UpdateBook /> },
 
       //Rutas User
       {path:"user/table", element: <TableUsers/>},
@@ -49,6 +52,9 @@ const rutas = createBrowserRouter([
 ])
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <>
     <RouterProvider router={rutas} />
+    <Toaster />
+    </>
   </StrictMode>,
 )
