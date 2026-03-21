@@ -40,6 +40,7 @@ return (
 
     <TableBody>
         {auctions.map((auction) => (
+
         <TableRow key={auction.id} className="h-20">
             {/* Imagen */}
             <TableCell className="w-52 h-76">
@@ -87,14 +88,14 @@ return (
             </TableCell>
 
             <TableCell>
-                    <Button
-                        type="button"
-                        onClick={() => navigate(`/auction/detail/${auction.id}`)}
-                        className="px-4 py-2 bg-accent text-white hover:bg-accent/90"
-                    >
-                        Detalle
-                    </Button>
-                </TableCell>
+                <Button
+                    type="button"
+                    onClick={() => navigate(`/auction/detail/${auction.id}`)}
+                    className="px-4 py-2 bg-accent text-white hover:bg-accent/90"
+                >
+                    Detalle
+                </Button>
+            </TableCell>
         </TableRow>
         ))}
     </TableBody>

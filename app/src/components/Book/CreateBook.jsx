@@ -29,7 +29,7 @@ import { CustomMultiSelect } from "../ui/custom/custom-multiple-select"; // sele
 export function CreateBook() {
     const navigate = useNavigate();
 
-  /*** Estados para selects y preview de imagen ***/
+    /*** Estados para selects y preview de imagen ***/
     const [dataMaterial, setDataMaterial] = useState([]); 
     const [dataEdition, setDataEdition] = useState([]); 
     const [dataGenres, setDataGenres] = useState([]); 

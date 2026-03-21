@@ -12,11 +12,15 @@ import { DetailBook } from './components/Book/DetailBook'
 import TableUsers from './components/User/TableUsers'
 import DetailUser from './components/User/DetailUser'
 import TableAuctions from './components/Auction/TableAuctions'
+import MaintenanceAuctions from './components/Auction/MaintenanceAuctions'
 import DetailAuction from './components/Auction/DetailAuction'
 import DetailBid from './components/Auction/Bid/DetailBid'
+//import CreateAuction from './components/Auction/CreateAuction'
 import { UpdateUser } from './components/User/UpdateUser'
 import { CreateBook } from './components/Book/CreateBook'
 import { UpdateBook } from './components/Book/UpdateBook'
+import { CreateAuction } from './components/Auction/CreateAuction'
+import { UpdateAuction } from './components/Auction/UpdateAuction';
 
 const rutas = createBrowserRouter([
   {
@@ -42,7 +46,10 @@ const rutas = createBrowserRouter([
 
       //Rutas Auction
       {path:"auction/table", element: <TableAuctions/>},
+      {path:"/auction/maintenance", element: <MaintenanceAuctions/>},
+      {path:"/auction/create", element: <CreateAuction />},
       {path:"auction/detail/:id", element: <DetailAuction/>},
+      {path:"/auction/update/:id", element: <UpdateAuction />},
 
       //Rutas Bid
       {path:"auction/bid/detail/:id", element: <DetailBid/>}

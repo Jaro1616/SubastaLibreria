@@ -21,5 +21,27 @@ class AuctionService {
   getBookByAuction(BookId){
     return axios.get(BASE_URL+'/getAuctionByBook/'+BookId);
   }
+
+  //Crear libro 
+  //http://localhost:81/SubastaLibreria/api/auction/create
+  createAuction(Auction) {
+    return axios.post(BASE_URL, JSON.stringify(Auction));
+  }
+
+  //Actualizar subasta 
+  //http://localhost:81/SubastaLibreria/api/auction/update
+  updateAuction(Auction) {
+    return axios({
+      method: 'put',
+      url: BASE_URL,
+      data: JSON.stringify(Auction)
+
+    })
+  }
+  //Eliminar subasta
+  //http://localhost:81/SubastaLibreria/api/auction/delete/1
+  deleteAuction(AuctionId) {
+    return axios.delete(`${BASE_URL}/delete/${AuctionId}`);
+  }
 }
 export default new AuctionService();

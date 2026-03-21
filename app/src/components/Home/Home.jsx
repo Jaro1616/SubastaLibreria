@@ -25,7 +25,7 @@ export function Home() {
         </p>
         <div className="flex justify-center gap-4">
           <a
-            href="/movies"
+            href="/auction/table"
             className="px-6 py-3 bg-primary text-red-950 rounded-lg font-semibold shadow-lg hover:bg-primary/90 transition"
           >
             <u>Ver Subastas</u>

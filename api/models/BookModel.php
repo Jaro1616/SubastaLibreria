@@ -32,11 +32,15 @@ class BookModel
                 //Vendedor - seller
                 $vResultado[$i]->seller=$userB->get($vResultado[$i]->seller_id);
                 //Subasta - auction
-                $vResultado[$i]->auction=$auctionB->getAuctionByBook($vResultado[$i]->id);
+                $vResultado[$i]->auction=$auctionB->getAuctionByBook($vResultado[$i]->id);     
+                $auction = $vResultado[$i]->auction ?? null;
+                $status = $auction->status ?? null;
                 //Flags
-                $vResultado[$i]->isEditable = $vResultado[$i]->auction === null || $vResultado[$i]->auction->status !== 'Active';
-                $vResultado[$i]->isDeletable = $vResultado[$i]->auction == null;
-                //$vResultado[$i]->canToggle = $vResultado[$i]->auction == null;
+                //$vResultado[$i]->isEditable = $vResultado[$i]->auction === null || $vResultado[$i]->auction->status !== 'Active';
+                //$vResultado[$i]->isDeletable = $vResultado[$i]->auction == null;
+                $vResultado[$i]->isEditable = $status !== 'Active';
+                $vResultado[$i]->isDeletable = ($auction === null);
+                $vResultado[$i]->isAuctionable = !in_array($status, ['Active', 'Pending']);
             }
         }
         //Retornar la respuesta
@@ -53,7 +57,7 @@ class BookModel
         $auctionB = new AuctionModel();
         //Consulta SQL
         $vSql = "SELECT * FROM book
-                    where id=$id;";
+                    where id=$id and active = 1;";
         //Ejecutar la consulta sql
         $vResultado = $this->enlace->executeSQL($vSql);
         if(!empty($vResultado)){
@@ -70,11 +74,15 @@ class BookModel
             $vResultado->seller=$userB->get($vResultado->seller_id);
             //Subasta - auction
             $vResultado->auction=$auctionB->getAuctionByBook($id);
-
+            $auction = $vResultado->auction ?? null;
+            $status = $auction->status ?? null;
             //Flags
-            $vResultado->isEditable = $vResultado->auction === null || $vResultado->auction->status !== 'Active';
-            $vResultado->isDeletable = $vResultado->auction == null;
-            //$vResultado->canToggle = $vResultado->auction == null;
+            //$vResultado->isEditable = $vResultado->auction === null || $vResultado->auction->status !== 'Active';
+            //$vResultado->isDeletable = $vResultado->auction == null;
+            //$vResultado->isAuctionable = $vResultado->auction->status !== 'Active' || $vResultado->auction->status !== 'Pending';
+            $vResultado->isEditable = ($status !== 'Active');
+            $vResultado->isDeletable = ($auction === null);
+            $vResultado->isAuctionable = !in_array($status, ['Active', 'Pending']);
         }
         //Retornar la respuesta
         return $vResultado;
@@ -132,7 +140,7 @@ class BookModel
             $vResultadoG = $this->enlace->executeSQL_DML($sql);
         }
 
-        //Retornar pelicula
+        //Retornar libro actualizado
         return $this->get($objeto->id);
     } 
 

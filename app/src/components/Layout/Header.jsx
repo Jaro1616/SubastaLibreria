@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import {
   Layers,
   Book,
-  ChartArea,
   Filter,
   LogIn,
   UserPlus,
@@ -14,7 +13,8 @@ import {
   ChevronDown,
   BookOpen,
   User,
-  ShoppingBasket
+  ShoppingBasket,
+  Cog
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +41,11 @@ const navItems = [
     href: "/book/filter",
     icon: <Filter className="h-4 w-4" />,
   },
+  {
+    title: "Subastas",
+    href: "/auction/table",
+    icon: <ShoppingBasket className="h-4 w-4" />,
+  },
 ];
 
 const mantItems = [
@@ -54,16 +59,12 @@ const mantItems = [
       href: "/user/table",
       icon: <User className="h-4 w-4" />,
     },
+
     {
-      title: "Subastas",
-      href: "/auction/table",
-      icon: <ShoppingBasket className="h-4 w-4" />,
-    },
-/*    {
-      title: "PRUEBA",
-      href: "/auction/prueba",
-      icon: <ChartArea className="h-4 w-4" />,
-    }, */
+      title: "Mantenimiento Subastas",
+      href: "/auction/maintenance",
+      icon: <Cog className="h-4 w-4" />,
+    }, 
 ];
 
 const userItems = [
