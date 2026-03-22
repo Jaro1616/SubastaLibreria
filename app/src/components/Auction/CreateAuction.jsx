@@ -102,7 +102,7 @@ export function CreateAuction() {
         }, []);
 
         const availableBooks = books.filter(
-                b => b.seller_id == currentUser.id && b.isEditable == 1 && b.active == 1
+                b => b.seller_id == currentUser.id && b.isAuctionable == 1 && b.active == 1
         );
 
         /*** Selección de libro */

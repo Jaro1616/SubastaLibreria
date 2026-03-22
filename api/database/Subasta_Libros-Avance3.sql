@@ -1,0 +1,344 @@
+CREATE DATABASE  IF NOT EXISTS `subasta_libros` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
+USE `subasta_libros`;
+-- MySQL dump 10.13  Distrib 8.0.45, for Win64 (x86_64)
+--
+-- Host: localhost    Database: subasta_libros
+-- ------------------------------------------------------
+-- Server version	5.5.5-10.4.32-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auction`
+--
+
+DROP TABLE IF EXISTS `auction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_id` int(11) NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `base_price` decimal(18,2) NOT NULL DEFAULT 0.00,
+  `min_increment` decimal(18,2) NOT NULL DEFAULT 1.00,
+  `status` varchar(20) NOT NULL DEFAULT 'Active',
+  PRIMARY KEY (`id`),
+  KEY `fk_auction_book` (`book_id`),
+  CONSTRAINT `fk_auction_book` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auction`
+--
+
+LOCK TABLES `auction` WRITE;
+/*!40000 ALTER TABLE `auction` DISABLE KEYS */;
+INSERT INTO `auction` VALUES (1,1,'2026-02-01 09:00:00','2026-02-10 18:00:00',100.00,5.00,'Closed'),(2,2,'2026-02-28 09:00:00','2026-03-06 19:00:00',150.00,5.00,'Closed'),(3,3,'2026-03-01 10:00:00','2026-03-08 17:00:00',120.00,5.00,'Active'),(4,4,'2026-03-02 08:00:00','2026-03-10 20:00:00',180.00,5.00,'Active'),(7,1,'2026-03-26 09:00:00','2026-03-31 20:00:00',6000.00,750.00,'Active'),(10,7,'2026-03-21 12:32:00','2026-03-22 12:32:00',12300.00,12301.00,'Pending');
+/*!40000 ALTER TABLE `auction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bid`
+--
+
+DROP TABLE IF EXISTS `bid`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bid` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `auction_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `amount` decimal(18,2) NOT NULL,
+  `bid_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `fk_bid_auction` (`auction_id`),
+  KEY `fk_bid_user` (`customer_id`),
+  CONSTRAINT `fk_bid_auction` FOREIGN KEY (`auction_id`) REFERENCES `auction` (`id`),
+  CONSTRAINT `fk_bid_user` FOREIGN KEY (`customer_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bid`
+--
+
+LOCK TABLES `bid` WRITE;
+/*!40000 ALTER TABLE `bid` DISABLE KEYS */;
+INSERT INTO `bid` VALUES (1,1,4,105.00,'2026-02-03 18:00:00'),(2,1,4,110.00,'2026-02-06 21:30:00'),(3,1,4,115.00,'2026-02-09 23:45:00'),(4,2,4,155.00,'2026-03-01 16:15:00'),(5,2,4,160.00,'2026-03-03 22:40:00'),(6,3,4,125.00,'2026-03-02 18:20:00'),(7,3,4,130.00,'2026-03-06 00:05:00'),(8,3,4,135.00,'2026-03-07 15:55:00'),(9,4,4,185.00,'2026-03-03 14:45:00');
+/*!40000 ALTER TABLE `bid` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `book`
+--
+
+DROP TABLE IF EXISTS `book`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `book` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `author` varchar(150) NOT NULL,
+  `isbn` varchar(20) DEFAULT NULL,
+  `publisher` varchar(100) DEFAULT NULL,
+  `year` smallint(4) unsigned DEFAULT NULL,
+  `seller_id` int(11) NOT NULL,
+  `material_id` int(11) NOT NULL,
+  `edition_id` int(11) NOT NULL,
+  `description` text DEFAULT NULL,
+  `register_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY `fk_book_user` (`seller_id`),
+  KEY `fk_book_edition` (`edition_id`),
+  KEY `fk_book_material` (`material_id`),
+  CONSTRAINT `fk_book_edition` FOREIGN KEY (`edition_id`) REFERENCES `edition` (`id`),
+  CONSTRAINT `fk_book_material` FOREIGN KEY (`material_id`) REFERENCES `material` (`id`),
+  CONSTRAINT `fk_book_user` FOREIGN KEY (`seller_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book`
+--
+
+LOCK TABLES `book` WRITE;
+/*!40000 ALTER TABLE `book` DISABLE KEYS */;
+INSERT INTO `book` VALUES (1,'Don Quijote de la Mancha','Miguel de Cervantes','9788420412146','Alfaguara',1605,2,1,1,'Novela clásica de la literatura española publicada por primera vez en 1605. ejemplar en buen estado.','2026-02-27 23:35:19',1),(2,'Cien años de soledad','Gabriel García Márquez','ISBN-CAOS-0001','Editorial Sudamericana',1967,2,2,4,'Primera gran novela del boom latinoamericano; ejemplar en buen estado.','2026-02-27 23:35:19',1),(3,'1984','George Orwell','ISBN-1984-0002','Secker & Warburg',1949,2,1,2,'Edición coleccionista con sobrecubierta; leves señales de uso.','2026-02-27 23:35:19',1),(4,'El nombre de la rosa','Umberto Eco','ISBN-ROSA-0003','Bompiani',1980,2,3,5,'Incluye apéndices y notas; encuadernación en cuero.','2026-02-27 23:35:19',1),(5,'Libro A','Autor A','ISBN A','Editorial A',2020,1,2,3,'Libro descripcion AAAAAAAAAAAA','2026-03-19 01:29:10',1),(6,'Libro de prueba','Autor Prueba','ISBN-TEST-123','Editorial Test',2022,1,1,1,'Libro creado desde Postman','2026-03-19 01:33:33',0),(7,' La condena','Franz Kafka','ISBN-KAFKA-0004','Kurt Wolff Verlag',1913,1,4,5,'Relato escrito por Franz Kafka en 1912 y publicado en 1913. Considerada una de sus obras fundamentales dentro de su etapa expresionista. Ejemplar en excelente estado.','2026-03-19 05:22:12',1),(8,'Alas de sangre','Rebecca Yarros','BAS-452-666','Weekly y Kirkus Reviews',2023,1,3,5,'Alas de sangre es un novela que trata sobre un mundo oscuro lleno de violencia, dragones y poderes.','2026-03-19 05:51:43',1);
+/*!40000 ALTER TABLE `book` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `book_genre`
+--
+
+DROP TABLE IF EXISTS `book_genre`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `book_genre` (
+  `book_id` int(11) NOT NULL,
+  `genre_id` int(11) NOT NULL,
+  PRIMARY KEY (`book_id`,`genre_id`),
+  KEY `fk_bg_genre` (`genre_id`),
+  CONSTRAINT `fk_bg_book` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`),
+  CONSTRAINT `fk_bg_genre` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book_genre`
+--
+
+LOCK TABLES `book_genre` WRITE;
+/*!40000 ALTER TABLE `book_genre` DISABLE KEYS */;
+INSERT INTO `book_genre` VALUES (1,1),(2,4),(2,9),(3,3),(3,14),(4,2),(4,14),(5,10),(5,11),(5,13),(6,1),(6,2),(7,4),(7,9),(7,14),(8,1),(8,2),(8,4),(8,7),(8,8);
+/*!40000 ALTER TABLE `book_genre` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `book_image`
+--
+
+DROP TABLE IF EXISTS `book_image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `book_image` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_id` int(11) NOT NULL,
+  `image_path` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_image_book` (`book_id`),
+  CONSTRAINT `fk_image_book` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book_image`
+--
+
+LOCK TABLES `book_image` WRITE;
+/*!40000 ALTER TABLE `book_image` DISABLE KEYS */;
+INSERT INTO `book_image` VALUES (1,1,'PortadaQuijote.jpeg'),(2,2,'PortadaCien.jpeg'),(3,3,'Portada1984.jpeg'),(4,4,'PortadElnombre.jpeg'),(5,8,'book-69bb8eef32529.jpeg'),(6,5,'book-69bdb7500fe9a.jpeg'),(7,5,'book-69bdb9dc27d2e.jpeg'),(8,7,'book-69bdcf5c71c98.jpeg'),(9,7,'book-69c050a85f059.jpeg'),(10,7,'book-69c050c387983.jpeg');
+/*!40000 ALTER TABLE `book_image` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `edition`
+--
+
+DROP TABLE IF EXISTS `edition`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `edition` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `edition`
+--
+
+LOCK TABLES `edition` WRITE;
+/*!40000 ALTER TABLE `edition` DISABLE KEYS */;
+INSERT INTO `edition` VALUES (1,'1ra edición'),(2,'Coleccionista'),(3,'Bolsillo'),(4,'Estandar'),(5,'Edición especial'),(6,'Edición crítica');
+/*!40000 ALTER TABLE `edition` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `genre`
+--
+
+DROP TABLE IF EXISTS `genre`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `genre` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `genre`
+--
+
+LOCK TABLES `genre` WRITE;
+/*!40000 ALTER TABLE `genre` DISABLE KEYS */;
+INSERT INTO `genre` VALUES (1,'Fantasía'),(2,'Historia'),(3,'Ciencia ficción'),(4,'Ficción'),(5,'Terror'),(7,'Romance'),(8,'Aventura'),(9,'Drama'),(10,'Juvenil'),(11,'Espiritualidad'),(12,'Educación'),(13,'Autoayuda'),(14,'Misterio');
+/*!40000 ALTER TABLE `genre` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `material`
+--
+
+DROP TABLE IF EXISTS `material`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `material` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `material`
+--
+
+LOCK TABLES `material` WRITE;
+/*!40000 ALTER TABLE `material` DISABLE KEYS */;
+INSERT INTO `material` VALUES (1,'Tapa dura'),(2,'Tapa blanda'),(3,'Tapa cuero'),(4,'Tapa especial'),(5,'Tapa tela');
+/*!40000 ALTER TABLE `material` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `auction_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `total` decimal(18,2) NOT NULL,
+  `status` varchar(45) NOT NULL DEFAULT 'Pending',
+  `payment_date` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auction_id_UNIQUE` (`auction_id`),
+  KEY `fk_payment_user` (`customer_id`),
+  CONSTRAINT `fk_payment_auction` FOREIGN KEY (`auction_id`) REFERENCES `auction` (`id`),
+  CONSTRAINT `fk_payment_user` FOREIGN KEY (`customer_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment`
+--
+
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rol`
+--
+
+DROP TABLE IF EXISTS `rol`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rol` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(65) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rol`
+--
+
+LOCK TABLES `rol` WRITE;
+/*!40000 ALTER TABLE `rol` DISABLE KEYS */;
+INSERT INTO `rol` VALUES (1,'Administrador'),(2,'Vendedor'),(3,'Comprador');
+/*!40000 ALTER TABLE `rol` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` text NOT NULL,
+  `rol_id` int(11) NOT NULL DEFAULT 3,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_email` (`email`),
+  KEY `fk_user_rol` (`rol_id`),
+  CONSTRAINT `fk_user_rol` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'Juan Perez','perezjuan@gmail.com','123456',2,1,'2026-02-19 05:24:41'),(2,'Jarret Orozco','jarret@mail.com','123456',2,1,'2026-02-19 05:24:41'),(3,'Mariela Salazar','mariela@mail.com','123456',1,1,'2026-02-19 05:24:41'),(4,'Miguel Suarez','miguelsala@gmail.com','123456',3,1,'2026-02-19 05:24:41');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-03-22 14:54:20
