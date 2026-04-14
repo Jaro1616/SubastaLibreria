@@ -24,6 +24,8 @@ import { CustomSelect } from "../ui/custom/custom-select";
 export function CreateAuction() {
         const navigate = useNavigate();
 
+        //2 Jarret Orozco
+        //1 Juan Perez
         const currentUser = {
                 id: 1,
                 name: "Juan Perez"
@@ -122,7 +124,7 @@ export function CreateAuction() {
                 ...data,
                 start_date: format(new Date(data.start_date), "yyyy-MM-dd HH:mm:ss"),
                 end_date: format(new Date(data.end_date), "yyyy-MM-dd HH:mm:ss"),
-                status: "Active"
+                //status: "Active"
                 };
 
                 console.log("DATA FINAL:", formattedData);
