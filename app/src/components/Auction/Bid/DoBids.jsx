@@ -9,7 +9,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
+//import { Badge } from "@/components/ui/badge";
+import toast from "react-hot-toast";
 import {
     CircleDollarSign,
     ReceiptText,
@@ -20,10 +21,14 @@ import {
     Clock,
     TableOfContents,
     ClipboardClock,
+    BrushCleaning,
+    ArrowLeft,
+    ArrowUpRight
 } from "lucide-react";
 import { LoadingGrid } from '../../ui/custom/LoadingGrid';
 import { EmptyState } from '../../ui/custom/EmptyState';
 import AuctionService from "@/services/AuctionService";
+import BidService from "@/services/BidService";
 
 export function DoBids() {
     const navigate = useNavigate();
@@ -35,25 +40,35 @@ export function DoBids() {
     //PARA EL CONTADOR
     const [timeLeft, setTimeLeft] = useState("");
 
+    // PARA EL TEMA DE USUARIOS
+    const usuariosPermitidos = [4, 8, 9, 10, 11, 12]; // IDS PERMITIDOS PARA HACER PUJAS (COMPRADORES)
+    const [indiceUsuario, setIndiceUsuario] = useState(0);
+    const currentUserId = usuariosPermitidos[indiceUsuario];
+
 
     /*** PARTE DE FORMULARIO ***/
     /*** Yup ***/
     const bidSchema = yup.object({
-            increment: yup
-            .number()
-            .typeError('Solo números')
-            .required('Incremento requerido')
-            .moreThan(0, 'Debe ser mayor a 0')
+        auction_id: yup
+        .number(),
+
+        amount: yup
+        .number()
+        .typeError('Solo números')
+        .required('Monto requerido')
+        .moreThan(0, 'Debe ser mayor a 0')
     });
 
     /*** Form ***/
     const {
             control,
             handleSubmit,
+            reset,
             formState: { errors },
     } = useForm({
             defaultValues: {
-            increment: 1
+                auction_id: id,
+                amount: ""
             },
             resolver: yupResolver(bidSchema)
     });
@@ -61,26 +76,53 @@ export function DoBids() {
     //AQUI VA TODA LA LOGICA PARA HACER LA PUJA
     const onSubmit = async (data) => {
         try {
-            const formattedData = {
-            ...data,
-            start_date: format(new Date(data.start_date), "yyyy-MM-dd HH:mm:ss"),
-            end_date: format(new Date(data.end_date), "yyyy-MM-dd HH:mm:ss"),
-            //status: "Active"
+            const now = new Date();
+            const end = new Date(auction.data.end_date);
+
+            if (now >= end) {
+                setError("La subasta ya ha finalizado");
+                toast.error("La subasta ya ha finalizado");
+                return;
+            }
+
+            const currentHighest = auction.data.highest_bid?.amount || auction.data.base_price;
+            const minAllowed = Number(currentHighest) + Number(auction.data.min_increment);
+
+            // VALIDACIÓN PRINCIPAL
+            if (Number(data.amount) < minAllowed) {
+                const mensaje = `La puja mínima permitida es ₡${minAllowed.toLocaleString()}`;
+                setError(mensaje);
+                toast.error(mensaje);
+                return;
+            }
+
+            const bidData = {
+                auction_id: auction.data.id,
+                customer_id: currentUserId,
+                amount: Number(data.amount)
             };
 
-            console.log("DATA FINAL:", formattedData);
+            await BidService.createBid(bidData);
 
-            const response = await AuctionService.createAuction(formattedData);
+            toast.success("¡Puja realizada correctamente!");
 
-            toast.success("Subasta creada correctamente");
-            navigate("/auction/maintenance");
+            reset({ amount: "" });
+            setError(null);
 
         } catch (err) {
             console.error(err);
-            setError("Error al crear subasta");
+            setError("Error al hacer la puja");
         }
     };
     /*** PARTE DE FORMULARIO ***/
+
+
+    //FUNCION PARA CAMBIAR DE USUARIO (PARA PROBAR EL TEMA DE LAS PUJAS)
+    const cambiarUsuario = () => {
+    setIndiceUsuario((prevIndice) => 
+        (prevIndice + 1) % usuariosPermitidos.length
+    );
+    };
 
 
     //PARA EL CONTADOR DE TIEMPO RESTANTE
@@ -109,6 +151,7 @@ export function DoBids() {
         return () => clearInterval(interval);
     }, [auction]);
 
+
     //CARGO LOS DATOS
     useEffect(() => {
         const fetchData = async () => {
@@ -134,7 +177,7 @@ export function DoBids() {
 
     if (loading) return <LoadingGrid count={1} type="grid" />;
     if (error) return <ErrorAlert title="Error al cargar subastas" message={error} />;
-    if (!auction || auction.data.length === 0)
+    if (!auction || !auction.data)
         return <EmptyState message="No se encontraron subastas en esta tienda." />;
     return (
         <Card className="p-6 max-w-5xl mx-auto">  
@@ -155,6 +198,13 @@ export function DoBids() {
                     />
                 )}
             </Card>
+
+            <div className="flex justify-between gap-4 mt-6">
+                <Button type="button" onClick={() => navigate(-1)}>
+                        <ArrowLeft className="w-4 h-4" />
+                        Regresar
+                </Button>
+            </div>
             
             <h1 className="text-3xl font-bold tracking-tight">
             <ReceiptText className="inline-block mr-2" />
@@ -216,22 +266,43 @@ export function DoBids() {
 
             {/* AQUI FALTA AGREGAR 2 BTN UNO QUE LIMPIE LA CAJA Y OTRO QUE ME DEJE HACER LA PUJA */}
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div>
-                        <Label>REALIZAR PUJA</Label>
-                        <Controller
-                        name="increment"
-                        control={control}
-                        render={({ field }) => (
-                                <Input type="number" {...field} />
-                        )}
-                        />
-                        {errors.increment && (
-                        <p className="text-red-500">{errors.increment.message}</p>
-                        )}
+                <div className="space-y-2">
+                    <Label>REALIZAR PUJA</Label>
+                    <Controller
+                    name="amount"
+                    control={control}
+                    render={({ field }) => (
+                            <Input type="number" {...field} />
+                    )}
+                    />
+                    {errors.amount && (
+                    <p className="text-red-500">{errors.amount.message}</p>
+                    )}
+
+                    {/* BOTONES */}
+                    <Button type="submit" className="flex-1">
+                            <ArrowUpRight className="w-4 h-4" />
+                            Realizar puja
+                    </Button>
+                    <Button type="button" variant="destructive" 
+                        onClick={() => reset({ amount: "" })}
+                    >
+                        <BrushCleaning className="w-4 h-4" />
+                        Limpiar
+                    </Button>
+                    <br />
+                    <Button 
+                        type="button" 
+                        variant="outline" 
+                        onClick={cambiarUsuario}
+                        className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
+                        >
+                        Usuario ID: {currentUserId}
+                    </Button>
                 </div>
             </form>
 
-            {/* Sección de las pujas AQUI CARGAR TODAS LAS PUJAS AL OBJETO*/}
+            {/* Sección de las pujas*/}
             <div className="flex-1 space-y-6">
                 <Card>
                     <CardContent className="p-6 space-y-6">
