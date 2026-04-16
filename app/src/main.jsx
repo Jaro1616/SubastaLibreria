@@ -21,6 +21,7 @@ import { CreateBook } from './components/Book/CreateBook'
 import { UpdateBook } from './components/Book/UpdateBook'
 import { CreateAuction } from './components/Auction/CreateAuction'
 import { UpdateAuction } from './components/Auction/UpdateAuction';
+import { DoBids } from './components/Auction/Bid/DoBids';
 
 const rutas = createBrowserRouter([
   {
@@ -50,10 +51,11 @@ const rutas = createBrowserRouter([
       {path:"/auction/create", element: <CreateAuction />},
       {path:"auction/detail/:id", element: <DetailAuction/>},
       {path:"/auction/update/:id", element: <UpdateAuction />},
+      
 
       //Rutas Bid
-      {path:"auction/bid/detail/:id", element: <DetailBid/>}
-      
+      {path:"auction/bid/detail/:id", element: <DetailBid/>},
+      {path:"/auction/dobid/:id", element: <DoBids />}
     ]
   }
 ])

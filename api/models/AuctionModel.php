@@ -29,6 +29,7 @@ class AuctionModel
     public function get($id)
     {
         $bookA = new BookModel();
+        $bidA = new BidModel();
         //Consulta sql
         $vSql = "SELECT * FROM auction where id=$id";
         //Ejecutar la consulta
@@ -36,6 +37,8 @@ class AuctionModel
         if (!empty($vResultado)) {
             $vResultado[0]->book = $bookA->get($vResultado[0]->book_id);
             $vResultado[0]->pujas_realizadas = $this->countPujasRealizadas($vResultado[0]->id);
+            $vResultado[0]->bids = $bidA->getBidByAuction($vResultado[0]->id);
+            $vResultado[0]->highest_bid = $bidA->getHighestBidByAuction($vResultado[0]->id);
         }
         // Retornar el objeto
         return $vResultado[0];

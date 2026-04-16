@@ -81,10 +81,17 @@ import {
                 </TableCell>
 
                 <TableCell>
-                    <Button
+                    {/* <Button
                         type="button"
                         onClick={() => navigate(`/auction/detail/${auction.id}`)}
                         className="px-4 py-2 bg-accent text-white hover:bg-accent/90"
+                    >
+                        Detalle
+                    </Button> */}
+                    <Button
+                        type="button"
+                        onClick={() => navigate(`/auction/detail/${auction.id}`)}
+                        className="w-20 h-20 flex items-center gap-2 bg-accent text-white hover:bg-accent/90"
                     >
                         Detalle
                     </Button>

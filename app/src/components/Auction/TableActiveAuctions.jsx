@@ -87,7 +87,7 @@ return (
             {auction.pujas_realizadas}
             </TableCell>
 
-            <TableCell>
+            {/* <TableCell>
                 <Button
                     type="button"
                     onClick={() => navigate(`/auction/detail/${auction.id}`)}
@@ -95,6 +95,30 @@ return (
                 >
                     Detalle
                 </Button>
+            </TableCell> */}
+            <TableCell className="flex justify-start items-center gap-1">
+                <Button
+                    type="button"
+                    onClick={() => navigate(`/auction/detail/${auction.id}`)}
+                    className="w-20 h-20 flex items-center gap-2 bg-accent text-white hover:bg-accent/90 mt-25"
+                >
+                    Detalle
+                </Button>
+                {/* <br /> <br /> */}
+                <Button
+                    type="button"
+                    onClick={() => navigate(`/auction/dobid/${auction.id}`)}
+                    className="w-20 h-20 flex items-center gap-2 bg-accent text-white hover:bg-accent/90 mt-25"
+                >
+                    Subasta
+                </Button>
+                {/* <Button
+                    type="button"
+                    //onClick={() => handleDelete(auction.id)}
+                    className="w-20 h-20 flex items-center gap-2 bg-accent text-white hover:bg-accent/90 mt-25"
+                >
+                    Historial
+                </Button> */}
             </TableCell>
         </TableRow>
         ))}

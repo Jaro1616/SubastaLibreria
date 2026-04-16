@@ -45,4 +45,32 @@ class BidModel
         // Retornar el objeto
         return $vResultado;
     }
+
+    public function create($objeto)
+    {
+        //Consulta SQL
+        $sql = "INSERT INTO bid (auction_id, customer_id, amount) " .
+            "VALUES ($objeto->auction_id, 
+                        $objeto->customer_id, 
+                        $objeto->amount)";
+
+        //Ejecutar la consulta y obtener el último ID insertado
+        $idBid = $this->enlace->executeSQL_DML_last($sql);
+
+        //Retornar la subasta creada
+        return $this->get($idBid);
+    }
+
+    public function getHighestBidByAuction($auctionId)
+    {
+        $vSql = "SELECT * 
+                FROM bid 
+                WHERE auction_id = $auctionId 
+                ORDER BY amount DESC 
+                LIMIT 1";
+
+        $vResultado = $this->enlace->ExecuteSQL($vSql);
+
+        return !empty($vResultado) ? $vResultado[0] : null;
+    }
 }

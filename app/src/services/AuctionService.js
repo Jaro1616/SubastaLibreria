@@ -22,7 +22,7 @@ class AuctionService {
     return axios.get(BASE_URL+'/getAuctionByBook/'+BookId);
   }
 
-  //Crear libro 
+  //Crear subasta 
   //http://localhost:81/SubastaLibreria/api/auction/create
   createAuction(Auction) {
     return axios.post(BASE_URL, JSON.stringify(Auction));

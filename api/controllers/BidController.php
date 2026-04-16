@@ -49,4 +49,25 @@ class bid
             
         }
     }
+
+    //POST Crear
+    //http://localhost:81/SubastaLibreria/api/bid/create
+    public function create()
+    {
+        try {
+            $request = new Request();
+            $response = new Response();
+            //Obtener json enviado
+            $inputJSON = $request->getJSON();
+            //Instancia del modelo
+            $bid = new BidModel();
+            //Acción del modelo a ejecutar
+            $result = $bid->create($inputJSON);
+            //Dar respuesta
+            $response->toJSON($result);
+        } catch (Exception $e) {
+            $response->toJSON($result);
+            handleException($e);  
+        }
+    }
 }

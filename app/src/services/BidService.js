@@ -21,5 +21,11 @@ class BidService {
   getBidByAuction(AuctionId){
     return axios.get(BASE_URL+'/getBidByAuction/'+AuctionId);
   }
+
+  //Crear puja 
+  //http://localhost:81/SubastaLibreria/api/bid/create
+  createBid(Bid) {
+    return axios.post(BASE_URL, JSON.stringify(Bid));
+  }
 }
 export default new BidService();

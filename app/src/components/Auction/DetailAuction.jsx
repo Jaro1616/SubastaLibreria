@@ -71,7 +71,7 @@ export default function DetailAuction() {
                     </div>
                     {/* Badge del año en la esquina inferior derecha */}
                     <Badge variant="secondary" className="absolute bottom-4 right-4 text-1xl">
-                        {auction.data.book.title}
+                        {auction.data.book.year}
                     </Badge>
                 </div>
 
