@@ -29,6 +29,8 @@ import { LoadingGrid } from '../../ui/custom/LoadingGrid';
 import { EmptyState } from '../../ui/custom/EmptyState';
 import AuctionService from "@/services/AuctionService";
 import BidService from "@/services/BidService";
+// Pusher
+import Pusher from 'pusher-js';
 
 export function DoBids() {
     const navigate = useNavigate();
@@ -123,6 +125,38 @@ export function DoBids() {
         (prevIndice + 1) % usuariosPermitidos.length
     );
     };
+
+
+    //FUNCION PARA PUSHER
+    useEffect(() => {
+        // Conexión
+        const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
+            cluster: import.meta.env.VITE_PUSHER_CLUSTER,
+        });
+
+        // Suscripción al canal de esta subasta
+        const channel = pusher.subscribe(`auction-${id}`);
+
+        // Escuchar el evento
+        channel.bind('new-bid', (datosPusher) => {
+            console.log("Datos recibidos de Pusher:", datosPusher);
+            if (datosPusher.auction) {
+                setData({
+                    success: true,
+                    status: 200,
+                    data: datosPusher.auction
+                });
+                
+                toast.success("¡Nueva puja recibida en tiempo real!");
+            }
+        });
+
+        // Limpieza al salir de la página
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }, [id]);
 
 
     //PARA EL CONTADOR DE TIEMPO RESTANTE

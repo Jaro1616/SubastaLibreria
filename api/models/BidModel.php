@@ -46,6 +46,8 @@ class BidModel
         return $vResultado;
     }
 
+
+
     public function create($objeto)
     {
         //Consulta SQL
@@ -53,13 +55,37 @@ class BidModel
             "VALUES ($objeto->auction_id, 
                         $objeto->customer_id, 
                         $objeto->amount)";
-
         //Ejecutar la consulta y obtener el último ID insertado
         $idBid = $this->enlace->executeSQL_DML_last($sql);
+
+        //-- PUSHER --//
+        $auctionService = new AuctionModel(); 
+        $subastaCompleta = $auctionService->get($objeto->auction_id);
+
+        //Configurar App Keys
+        $options = array(
+            'cluster' => 'us2',
+            'useTLS' => true
+        );
+        $pusher = new Pusher\Pusher(
+            '2943894993f98c49710e',
+            '0b21ccc30d2d7ae7836a',
+            '2142888',
+            $options
+        );
+
+        //Trigger
+        //Canal: auction-ID, Evento: new-bid, Datos: la subasta completa
+        $pusher->trigger("auction-" . $objeto->auction_id, 'new-bid', [
+            'auction' => $subastaCompleta
+        ]);
+        //-- PUSHER --//
 
         //Retornar la subasta creada
         return $this->get($idBid);
     }
+
+
 
     public function getHighestBidByAuction($auctionId)
     {
