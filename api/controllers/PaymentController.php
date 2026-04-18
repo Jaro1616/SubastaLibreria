@@ -54,4 +54,22 @@ class payment
             handleException($e);  
         }
     }
+
+    //PUT pagar
+    //http://localhost:81/SubastaLibreria/api/payment/pay/1
+    public function pay($id)//pago por id
+    {
+        try {
+            $response = new Response();
+            //Instancia del modelo
+            $payment = new PaymentModel();
+            //Acción del modelo a ejecutar
+            $result = $payment->pay($id);
+            //Dar respuesta
+            $response->toJSON($result);
+        } catch (Exception $e) {
+            $response->toJSON($result);
+            handleException($e);
+        }
+    }
 }

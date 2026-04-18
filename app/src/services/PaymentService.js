@@ -19,6 +19,12 @@ class PaymentService {
     createPayment(Payment) {
         return axios.post(BASE_URL, JSON.stringify(Payment));
     }
+
+    //Pagar
+    //http://localhost:81/SubastaLibreria/api/payment/pay/1
+    payPayment(PaymentId) {
+        return axios.put(`${BASE_URL}/pay/${PaymentId}`);
+    }
 }
 
 export default new PaymentService();

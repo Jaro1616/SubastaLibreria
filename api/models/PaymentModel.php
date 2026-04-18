@@ -10,10 +10,18 @@ class PaymentModel
     /*Listar */
     public function all()
     {
+        $auctionB = new AuctionModel();
         //Consulta sql
         $vSql = "SELECT * FROM payment;";
         //Ejecutar la consulta
         $vResultado = $this->enlace->ExecuteSQL($vSql);
+
+        if(!empty($vResultado) && is_array($vResultado)){
+            for ($i=0; $i < count($vResultado); $i++) { 
+                //Auction - auctions
+                $vResultado[$i]->auction=$auctionB->get($vResultado[$i]->auction_id);
+            }
+        }
         // Retornar el objeto
         return $vResultado;
     }
@@ -42,5 +50,11 @@ class PaymentModel
 
         //Retornar el pago creado
         return $this->get($idAuction);
+    }
+
+    public function pay($id)
+    {
+        $sql = "UPDATE payment SET status = 'Cancelled', payment_date = NOW() WHERE id = $id";
+        return $this->enlace->executeSQL_DML($sql);
     }
 }

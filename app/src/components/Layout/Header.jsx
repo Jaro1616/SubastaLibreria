@@ -14,7 +14,8 @@ import {
   BookOpen,
   User,
   ShoppingBasket,
-  Cog
+  Cog,
+  Wallet
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -45,6 +46,12 @@ const navItems = [
     title: "Subastas",
     href: "/auction/table",
     icon: <ShoppingBasket className="h-4 w-4" />,
+  },
+
+  {
+    title: "Pagos",
+    href: "/payment/table",
+    icon: <Wallet className="h-4 w-4" />,
   },
 ];
 
