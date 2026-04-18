@@ -10,6 +10,8 @@ class AuctionModel
     public function all()
     {
         $bookA = new BookModel();
+        $bidA = new BidModel();
+        $userA = new UserModel();
         //Consulta sql
         $vSql = "SELECT * FROM auction;";
         //Ejecutar la consulta
@@ -19,6 +21,16 @@ class AuctionModel
             for ($i = 0; $i < count($vResultado); $i++) {
                 $vResultado[$i]->book = $bookA->get($vResultado[$i]->book_id);
                 $vResultado[$i]->pujas_realizadas = $this->countPujasRealizadas($vResultado[$i]->id);
+
+                $highestBid = $bidA->getHighestBidByAuction($vResultado[$i]->id);
+                $vResultado[$i]->highest_bid = $highestBid;
+
+                if ($highestBid && isset($highestBid->customer_id)) {
+                    $vResultado[$i]->user_leading = $userA->get($highestBid->customer_id);
+                } else {
+                    $vResultado[$i]->user_leading = null;
+                }
+
             }
             
         }
@@ -30,6 +42,7 @@ class AuctionModel
     {
         $bookA = new BookModel();
         $bidA = new BidModel();
+        $userA = new UserModel();
         //Consulta sql
         $vSql = "SELECT * FROM auction where id=$id";
         //Ejecutar la consulta
@@ -38,7 +51,14 @@ class AuctionModel
             $vResultado[0]->book = $bookA->get($vResultado[0]->book_id);
             $vResultado[0]->pujas_realizadas = $this->countPujasRealizadas($vResultado[0]->id);
             $vResultado[0]->bids = $bidA->getBidByAuction($vResultado[0]->id);
-            $vResultado[0]->highest_bid = $bidA->getHighestBidByAuction($vResultado[0]->id);
+            $highest = $bidA->getHighestBidByAuction($vResultado[0]->id);
+            $vResultado[0]->highest_bid = $highest;
+
+            if ($highest && isset($highest->customer_id)) {
+                $vResultado[0]->user_leading = $userA->get($highest->customer_id);
+            } else {
+                $vResultado[0]->user_leading = null;
+            }
         }
         // Retornar el objeto
         return $vResultado[0];

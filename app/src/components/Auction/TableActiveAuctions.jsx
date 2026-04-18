@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import AuctionService from "@/services/AuctionService";
+import PaymentService from "@/services/PaymentService";
 import {
     Table,
     TableHeader,
@@ -8,7 +10,7 @@ import {
     TableHead,
     TableCell,
 } from "@/components/ui/table";
-
+import { toast } from "sonner";
 import { FilmIcon } from "lucide-react";
 
 export default function TableActiveAuctions({ auctions }) {
@@ -21,6 +23,51 @@ if (!auctions || auctions.length === 0) {
         No hay subastas activas.
     </div>
     );
+}
+
+    async function CloseConfirmed(auction) {
+    const ganadorId = auction?.highest_bid?.customer_id;
+    const ganadorNombre = auction?.user_leading?.name || "Sin postores";
+    const montoFinal = auction?.highest_bid?.amount || auction.base_price;
+
+    try {
+        await AuctionService.closeAuction(auction.id);
+
+        if (ganadorId) {
+            const paymentData = {
+                auction_id: auction.id,
+                customer_id: ganadorId,
+                total: Number(montoFinal),
+                status: "Pending" 
+            };
+
+            await PaymentService.createPayment(paymentData);
+            console.log("Registro de pago creado como 'Pending'");
+        }
+
+        toast.success("¡Subasta finalizada!", {
+            description: `🏆 Ganador: ${ganadorNombre} con ₡${Number(montoFinal).toLocaleString()}. El pago ha sido registrado como pendiente.`,
+            duration: 5000,
+        });
+
+        setTimeout(() => window.location.reload(), 3000);
+
+    } catch (err) {
+        console.error("Error en el proceso de cierre/pago:", err);
+        toast.error("Ocurrió un error al procesar el cierre de la subasta");
+    }
+}
+
+function handleAction(auction) {
+    const now = new Date();
+    //const end = new Date(auction.end_date);
+    const end = new Date(auction.end_date.replace(" ", "T"));
+
+    if (now >= end) {
+        CloseConfirmed(auction);
+    } else {
+        navigate(`/auction/dobid/${auction.id}`);
+    }
 }
 
 return (
@@ -87,15 +134,6 @@ return (
             {auction.pujas_realizadas}
             </TableCell>
 
-            {/* <TableCell>
-                <Button
-                    type="button"
-                    onClick={() => navigate(`/auction/detail/${auction.id}`)}
-                    className="px-4 py-2 bg-accent text-white hover:bg-accent/90"
-                >
-                    Detalle
-                </Button>
-            </TableCell> */}
             <TableCell className="flex justify-start items-center gap-1">
                 <Button
                     type="button"
@@ -107,18 +145,11 @@ return (
                 {/* <br /> <br /> */}
                 <Button
                     type="button"
-                    onClick={() => navigate(`/auction/dobid/${auction.id}`)}
+                    onClick={() => handleAction(auction)}
                     className="w-20 h-20 flex items-center gap-2 bg-accent text-white hover:bg-accent/90 mt-25"
                 >
                     Subasta
                 </Button>
-                {/* <Button
-                    type="button"
-                    //onClick={() => handleDelete(auction.id)}
-                    className="w-20 h-20 flex items-center gap-2 bg-accent text-white hover:bg-accent/90 mt-25"
-                >
-                    Historial
-                </Button> */}
             </TableCell>
         </TableRow>
         ))}

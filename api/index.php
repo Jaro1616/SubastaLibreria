@@ -29,6 +29,7 @@ require_once "models/EditionModel.php";
 require_once "models/BookModel.php";
 require_once "models/BidModel.php";
 require_once "models/AuctionModel.php";
+require_once "models/PaymentModel.php";
 
 /***--- Agregar todos los controladores*/
 require_once "controllers/RolController.php";
@@ -40,6 +41,7 @@ require_once "controllers/EditionController.php";
 require_once "controllers/BookController.php";
 require_once "controllers/BidController.php";
 require_once "controllers/AuctionController.php";
+require_once "controllers/PaymentController.php";
 
 //Enrutador
 require_once "routes/RoutesController.php";

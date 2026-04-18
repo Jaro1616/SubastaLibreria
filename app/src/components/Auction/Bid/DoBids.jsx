@@ -28,6 +28,7 @@ import { LoadingGrid } from '../../ui/custom/LoadingGrid';
 import { EmptyState } from '../../ui/custom/EmptyState';
 import AuctionService from "@/services/AuctionService";
 import BidService from "@/services/BidService";
+import PaymentService from "@/services/PaymentService";
 // Pusher
 import Pusher from 'pusher-js';
 
@@ -80,9 +81,19 @@ export function DoBids() {
             const now = new Date();
             const end = new Date(auction.data.end_date);
 
-            if (now >= end) {
+            /* if (now >= end) {
                 setError("La subasta ya ha finalizado");
                 toast.error("La subasta ya ha finalizado");
+                return;
+            } */
+
+            if (now >= end) {
+                const mensaje = "La subasta ya ha finalizado";
+                setError(mensaje);
+                toast.error(mensaje);
+
+                await CloseConfirmed(auction.data);
+
                 return;
             }
 
@@ -231,6 +242,40 @@ export function DoBids() {
         fetchData(id);
     }, [id]);    
 
+
+    async function CloseConfirmed(auctionData) {
+        const ganadorId = auctionData?.highest_bid?.customer_id;
+        const ganadorNombre = auctionData?.user_leading?.name || "Sin postores";
+        const montoFinal = auctionData?.highest_bid?.amount || auctionData.base_price;
+
+        try {
+            await AuctionService.closeAuction(auctionData.id);
+
+            if (ganadorId) {
+                const paymentData = {
+                    auction_id: auctionData.id,
+                    customer_id: ganadorId,
+                    total: Number(montoFinal),
+                    status: "Pending"
+                };
+
+                await PaymentService.createPayment(paymentData);
+            }
+
+            toast.success("¡Subasta finalizada!", {
+                description: `🏆 Ganador: ${ganadorNombre} con ₡${Number(montoFinal).toLocaleString()}. Pago registrado como pendiente.`,
+                duration: 5000,
+            });
+
+            setTimeout(() => {
+                navigate("/auction/table");
+            }, 3000);
+
+        } catch (err) {
+            console.error("Error en el cierre o pago:", err);
+            toast.error("Ocurrió un error al procesar el cierre o el pago");
+        }
+    }
 
     if (loading) return <LoadingGrid count={1} type="grid" />;
     if (error) return <ErrorAlert title="Error al cargar subastas" message={error} />;
