@@ -263,7 +263,7 @@ export function DoBids() {
             }
 
             toast.success("¡Subasta finalizada!", {
-                description: `🏆 Ganador: ${ganadorNombre} con ₡${Number(montoFinal).toLocaleString()}. Pago registrado como pendiente.`,
+                description: `Ganador: ${ganadorNombre} con ₡${Number(montoFinal).toLocaleString()}.`,
                 duration: 5000,
             });
 

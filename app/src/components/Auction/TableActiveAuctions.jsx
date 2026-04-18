@@ -46,7 +46,7 @@ if (!auctions || auctions.length === 0) {
         }
 
         toast.success("¡Subasta finalizada!", {
-            description: `🏆 Ganador: ${ganadorNombre} con ₡${Number(montoFinal).toLocaleString()}. El pago ha sido registrado como pendiente.`,
+            description: `Ganador: ${ganadorNombre} con ₡${Number(montoFinal).toLocaleString()}.`,
             duration: 5000,
         });
 
