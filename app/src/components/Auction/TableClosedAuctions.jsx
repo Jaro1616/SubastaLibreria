@@ -77,7 +77,7 @@ import {
 
                 {/* Estado final */}
                 <TableCell className="text-lg">
-                {auction.final_state || "Finalizada"}
+                {auction.status || "Finalizada"}
                 </TableCell>
 
                 <TableCell>

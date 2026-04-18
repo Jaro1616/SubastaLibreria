@@ -38,10 +38,17 @@ class AuctionService {
 
     })
   }
+
   //Eliminar subasta
   //http://localhost:81/SubastaLibreria/api/auction/delete/1
   deleteAuction(AuctionId) {
     return axios.delete(`${BASE_URL}/delete/${AuctionId}`);
+  }
+  
+  //Cerrar subasta
+  //http://localhost:81/SubastaLibreria/api/auction/close/1
+  closeAuction(AuctionId) {
+    return axios.put(`${BASE_URL}/close/${AuctionId}`);
   }
 }
 export default new AuctionService();

@@ -9,8 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-//import { Badge } from "@/components/ui/badge";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import {
     CircleDollarSign,
     ReceiptText,
@@ -140,14 +139,38 @@ export function DoBids() {
         // Escuchar el evento
         channel.bind('new-bid', (datosPusher) => {
             console.log("Datos recibidos de Pusher:", datosPusher);
+
             if (datosPusher.auction) {
+                // --- LÓGICA DE NOTIFICACIÓN DE PUJA SUPERADA ---
+                const nuevoLiderId = String(datosPusher.auction.highest_bid?.customer_id);
+                const miIdSrt = String(currentUserId);
+
+                if (nuevoLiderId === miIdSrt) {
+                    toast.success("¡Vas a la cabeza!", {
+                    description: "Tu puja es la más alta actualmente.",
+                    });
+                }
+                else {
+                    const yoEstabaParticipando = datosPusher.auction.bids?.some(
+                        (bid) => String(bid.customer_id) === miIdSrt
+                    );
+
+                    if (yoEstabaParticipando) {
+                        toast.error("⚠️ ¡Tu puja ha sido superada!", {
+                            description: "Alguien ofreció un monto mayor. ¡Vuelve a pujar!",
+                        });
+                    } else {
+                        toast.info("Nueva puja en la subasta", {
+                            description: `El precio actual subió a ${datosPusher.auction.highest_bid.amount}`,
+                        });
+                    }
+                }
+
                 setData({
                     success: true,
                     status: 200,
                     data: datosPusher.auction
                 });
-                
-                toast.success("¡Nueva puja recibida en tiempo real!");
             }
         });
 
@@ -156,7 +179,7 @@ export function DoBids() {
             channel.unbind_all();
             channel.unsubscribe();
         };
-    }, [id]);
+    }, [id, currentUserId]);
 
 
     //PARA EL CONTADOR DE TIEMPO RESTANTE

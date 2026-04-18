@@ -108,4 +108,22 @@ class auction
             handleException($e);
         }
     }
+
+    //PUT cerrar
+    //http://localhost:81/SubastaLibreria/api/auction/close/1
+    public function close($id)//subasta por id
+    {
+        try {
+            $response = new Response();
+            //Instancia del modelo
+            $auction = new AuctionModel();
+            //Acción del modelo a ejecutar
+            $result = $auction->close($id);
+            //Dar respuesta
+            $response->toJSON($result);
+        } catch (Exception $e) {
+            $response->toJSON($result);
+            handleException($e);
+        }
+    }
 }

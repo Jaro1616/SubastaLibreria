@@ -109,4 +109,10 @@ class AuctionModel
         $sql = "UPDATE auction SET status = 'Cancelled' WHERE id = $id";
         return $this->enlace->executeSQL_DML($sql);
     }
+
+    public function close($id)
+    {
+        $sql = "UPDATE auction SET status = 'Closed' WHERE id = $id";
+        return $this->enlace->executeSQL_DML($sql);
+    }
 }

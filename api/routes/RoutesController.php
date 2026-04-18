@@ -140,14 +140,30 @@ class RoutesController
 
                     case 'PUT':
                     case 'PATCH':
-                        if ($param1) {
+                        if ($action && method_exists($response, $action)) {
+                        // 👉 primero intenta ejecutar acciones personalizadas
+                        if ($param1 && $param2) {
+                            $response->$action($param1, $param2);
+                        } elseif ($param1) {
+                            $response->$action($param1);
+                        } else {
+                            $response->$action();
+                        }
+                        } elseif ($param1) {
+                            // 👉 comportamiento REST normal
+                            $response->update($param1);
+                        } else {
+                            $response->update();
+                        }
+                        break;
+                        /* if ($param1) {
                             $response->update($param1);
                         } elseif ($action && method_exists($response, $action)) {
                             $response->$action();
                         } else {
                             $response->update();
                         }
-                        break;
+                        break; */
 
                     case 'DELETE':
                         if ($param1) {
