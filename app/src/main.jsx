@@ -23,6 +23,8 @@ import { CreateAuction } from './components/Auction/CreateAuction'
 import { UpdateAuction } from './components/Auction/UpdateAuction';
 import { DoBids } from './components/Auction/Bid/DoBids';
 import TablePayment from './components/Payment/TablePayment'
+import Login from './components/User/Login'
+import Register from './components/User/Register'
 
 const rutas = createBrowserRouter([
   {
@@ -43,6 +45,8 @@ const rutas = createBrowserRouter([
 
       //Rutas User
       {path:"user/table", element: <TableUsers/>},
+      {path: '/user/login',element: <Login />},
+      {path: '/user/create',element: <Register />},
       {path:"user/detail/:id", element: <DetailUser />},
       {path:"user/update/:id", element: <UpdateUser />},
 

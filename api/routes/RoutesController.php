@@ -6,8 +6,8 @@ class RoutesController
 
     public function __construct()
     {
-        // $this->authMiddleware = new AuthMiddleware();
-        // $this->registerRoutes();
+        $this->authMiddleware = new AuthMiddleware();
+        $this->registerRoutes();
         $this->routes();
     }
 
@@ -15,7 +15,7 @@ class RoutesController
     {
         // Registrar rutas protegidas
         //---------------------  Metodo,path (en minuscula),controlador, accion, array de nombres de roles
-        $this->addProtectedRoute('GET', '/apimovie/actor', 'actor', 'index', ['Administrador']);
+        $this->addProtectedRoute('GET', '/api/auction', 'auction', 'index', ['Administrador']);
     }
 
     public function routes()

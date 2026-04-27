@@ -89,6 +89,53 @@ class UserModel
 		return $this->get($objeto->id);
 	}
 
+	public function create($objeto)
+	{
+		if (isset($objeto->password) && $objeto->password != null) {
+			$crypt = password_hash($objeto->password, PASSWORD_BCRYPT);
+			$objeto->password = $crypt;
+		}
+		//Consulta sql            
+		$vSql = "Insert into user (name,email,password,rol_id,active)" .
+			" Values ('$objeto->name','$objeto->email','$objeto->password',$objeto->rol_id ,$objeto->active)";
+
+		//Ejecutar la consulta
+		$vResultado = $this->enlace->executeSQL_DML_last($vSql);
+		// Retornar el objeto creado
+		return $this->get($vResultado);
+	}
+
+	public function login($objeto)
+	{
+		$vSql = "SELECT * from User where email='$objeto->email'";
+		//Ejecutar la consulta
+		$vResultado = $this->enlace->ExecuteSQL($vSql);
+		if (is_object($vResultado[0])) {
+			$user = $vResultado[0];
+			if (password_verify($objeto->password, $user->password)) {
+				$usuario = $this->get($user->id);
+				if (!empty($usuario)) {
+					// Datos para el token JWT
+					$data = [
+						'id' => $usuario->id,
+						'email' => $usuario->email,
+						'rol' => $usuario->rol,
+						'iat' => time(),  // Hora de emisión
+						'exp' => time() + 3600 // Expiración en 1 hora
+					];
+
+					// Generar el token JWT
+					$jwt_token = JWT::encode($data, config::get('SECRET_KEY'), 'HS256');
+
+					// Enviar el token como respuesta
+					return $jwt_token;
+				}
+			}
+		} else {
+			return false;
+		}
+	}
+
 	//VALIDACIONES Y DATOS EXTRA
 	public function countSubastasCreadas($userId)
 	{

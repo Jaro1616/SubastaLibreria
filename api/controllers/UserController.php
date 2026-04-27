@@ -78,4 +78,33 @@ class user
             
         }
     }
+
+    //http://localhost:81/SubastaLibreria/api/user/create
+    public function create()
+    {
+        $response = new Response();
+        $request = new Request();
+        //Obtener json enviado
+        $inputJSON = $request->getJSON();
+        $usuario = new UserModel();
+        $result = $usuario->create($inputJSON);
+        //Dar respuesta
+        $response->toJSON($result);
+    }
+
+    //http://localhost:81/SubastaLibreria/api/user/login
+    public function login()
+    {
+        $response = new Response();
+        $request = new Request();
+        //Obtener json enviado
+        $inputJSON = $request->getJSON();
+        $usuario = new UserModel();
+        $result = $usuario->login($inputJSON);
+        if (isset($result) && !empty($result) && $result != false) {
+            $response->toJSON($result);
+        } else {
+            $response->toJSON($response, "Usuario no valido");
+        }
+    }
 }
