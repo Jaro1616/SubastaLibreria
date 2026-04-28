@@ -29,6 +29,9 @@ import { EmptyState } from '../../ui/custom/EmptyState';
 import AuctionService from "@/services/AuctionService";
 import BidService from "@/services/BidService";
 import PaymentService from "@/services/PaymentService";
+
+import { useUser } from "@/hooks/useUser";
+
 // Pusher
 import Pusher from 'pusher-js';
 
@@ -43,10 +46,12 @@ export function DoBids() {
     const [timeLeft, setTimeLeft] = useState("");
 
     // PARA EL TEMA DE USUARIOS
-    const usuariosPermitidos = [4, 8, 9, 10, 11, 12]; // IDS PERMITIDOS PARA HACER PUJAS (COMPRADORES)
+    /* const usuariosPermitidos = [4, 8, 9, 10, 11, 12]; // IDS PERMITIDOS PARA HACER PUJAS (COMPRADORES)
     const [indiceUsuario, setIndiceUsuario] = useState(0);
     const currentUserId = usuariosPermitidos[indiceUsuario];
-
+    */
+    const { user } = useUser();
+    const currentUserId = user?.id;
 
     /*** PARTE DE FORMULARIO ***/
     /*** Yup ***/
@@ -80,12 +85,6 @@ export function DoBids() {
         try {
             const now = new Date();
             const end = new Date(auction.data.end_date);
-
-            /* if (now >= end) {
-                setError("La subasta ya ha finalizado");
-                toast.error("La subasta ya ha finalizado");
-                return;
-            } */
 
             if (now >= end) {
                 const mensaje = "La subasta ya ha finalizado";
@@ -130,11 +129,11 @@ export function DoBids() {
 
 
     //FUNCION PARA CAMBIAR DE USUARIO (PARA PROBAR EL TEMA DE LAS PUJAS)
-    const cambiarUsuario = () => {
+    /* const cambiarUsuario = () => {
     setIndiceUsuario((prevIndice) => 
         (prevIndice + 1) % usuariosPermitidos.length
     );
-    };
+    }; */
 
 
     //FUNCION PARA PUSHER
@@ -393,14 +392,14 @@ export function DoBids() {
                         Limpiar
                     </Button>
                     <br />
-                    <Button 
+                    {/* <Button 
                         type="button" 
                         variant="outline" 
                         onClick={cambiarUsuario}
                         className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
                         >
                         Usuario ID: {currentUserId}
-                    </Button>
+                    </Button> */}
                 </div>
             </form>
 

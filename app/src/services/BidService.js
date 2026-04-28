@@ -24,8 +24,15 @@ class BidService {
 
   //Crear puja 
   //http://localhost:81/SubastaLibreria/api/bid/create
-  createBid(Bid) {
+/*   createBid(Bid) {
     return axios.post(BASE_URL, JSON.stringify(Bid));
+  } */
+  createBid(Bid) {
+    return axios.post(BASE_URL, Bid, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
   }
 }
 export default new BidService();

@@ -25,7 +25,7 @@ if (!auctions || auctions.length === 0) {
     );
 }
 
-    async function CloseConfirmed(auction) {
+async function CloseConfirmed(auction) {
     const ganadorId = auction?.highest_bid?.customer_id;
     const ganadorNombre = auction?.user_leading?.name || "Sin postores";
     const montoFinal = auction?.highest_bid?.amount || auction.base_price;

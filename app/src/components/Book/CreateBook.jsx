@@ -26,6 +26,8 @@ import { CustomInputField } from "../ui/custom/custom-input-field";
 import { CustomSelect } from "../ui/custom/custom-select";
 import { CustomMultiSelect } from "../ui/custom/custom-multiple-select"; // select multi con chips
 
+import { useUser } from "@/hooks/useUser";
+
 export function CreateBook() {
     const navigate = useNavigate();
 
@@ -34,10 +36,9 @@ export function CreateBook() {
     const [dataEdition, setDataEdition] = useState([]); 
     const [dataGenres, setDataGenres] = useState([]); 
     const [dataUser, setDataUser] = useState([]);
-    const currentUser = { //ID PARA HACER LA PRUEBA, DESPUES LO TENGO QUE QUITAR CUANDO HAGA AUTENTICACION
-        id: 1,
-        name: "Juan Perez"
-    };
+
+    const { user } = useUser();
+    const currentUser = user;
 
     const [file, setFile] = useState(null);
     const [fileURL, setFileURL] = useState(null);
@@ -92,7 +93,7 @@ export function CreateBook() {
             isbn: "",
             publisher: "",
             year: "",
-            seller_id: currentUser.id, // Asignar el ID del usuario actual - ESTO DESPUES LO TENGO QUE QUITAR CUANDO HAGA AUTENTICACION
+            seller_id: currentUser?.id, // Asignar el ID del usuario actual - ESTO DESPUES LO TENGO QUE QUITAR CUANDO HAGA AUTENTICACION
             material_id: "",
             edition_id: "",
             description: "",

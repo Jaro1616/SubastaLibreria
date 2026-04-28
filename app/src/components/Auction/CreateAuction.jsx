@@ -21,15 +21,15 @@ import AuctionService from "../../services/AuctionService";
 
 import { CustomSelect } from "../ui/custom/custom-select";
 
+import { useUser } from "@/hooks/useUser";
+
 export function CreateAuction() {
         const navigate = useNavigate();
 
         //2 Jarret Orozco
         //1 Juan Perez
-        const currentUser = {
-                id: 1,
-                name: "Juan Perez"
-        };
+        const { user } = useUser();
+        const currentUser = user;
 
         const [books, setBooks] = useState([]);
         const [selectedBook, setSelectedBook] = useState(null);
@@ -104,8 +104,11 @@ export function CreateAuction() {
         }, []);
 
         const availableBooks = books.filter(
-                b => b.seller_id == currentUser.id && b.isAuctionable == 1 && b.active == 1
+                b => b.seller_id == currentUser?.id && b.isAuctionable == 1 && b.active == 1
         );
+        /* const availableBooks = books.filter(
+                b => b.seller_id == currentUser.id && b.isAuctionable == 1 && b.active == 1
+        ); */
 
         /*** Selección de libro */
         const bookId = watch("book_id");
@@ -192,7 +195,7 @@ export function CreateAuction() {
                                 Vendedor
                         </Label>
                         <Input
-                                value={currentUser.name}
+                                value={currentUser?.name || "no llego el usuario"}
                                 readOnly
                                 className="mt-2 text-green-600 font-semibold"
                         />

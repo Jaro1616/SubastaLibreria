@@ -79,10 +79,41 @@ class BidModel
         $pusher->trigger("auction-" . $objeto->auction_id, 'new-bid', [
             'auction' => $subastaCompleta
         ]);
+/*         try {
+            $highestBid = $this->getHighestBidByAuction($objeto->auction_id);
+            $userModel = new UserModel();
+            $userLeading = $highestBid ? $userModel->get($highestBid->customer_id) : null;
+
+            $options = array(
+                'cluster' => 'us2',
+                'useTLS' => true
+            );
+            $pusher = new Pusher\Pusher(
+                '2943894993f98c49710e',
+                '0b21ccc30d2d7ae7836a',
+                '2142888',
+                $options
+            );
+
+            // Solo enviar los datos esenciales
+            $pusher->trigger("auction-" . $objeto->auction_id, 'new-bid', [
+                'auction_id'   => (int)$objeto->auction_id,
+                'highest_bid'  => $highestBid,
+                'user_leading' => $userLeading,
+                'amount'       => (float)$objeto->amount,
+            ]);
+
+        } catch (Exception $ePusher) {
+            // Loguear el error de Pusher pero no interrumpir la respuesta
+            error_log("Error de Pusher: " . $ePusher->getMessage());
+            // Temporal para ver el error directo en la respuesta:
+            file_put_contents('C:/xampp/htdocs/pusher_error.txt', $ePusher->getMessage());
+        } */
         //-- PUSHER --//
 
         //Retornar la subasta creada
         return $this->get($idBid);
+
     }
 
 

@@ -78,7 +78,7 @@ const mantItems = [
     title: "Mantenimiento Subastas",
     href: "/auction/maintenance",
     icon: <Cog className="h-4 w-4" />,
-    show: authorize(["Administrador"]),
+    show: authorize(["Administrador", "Vendedor"]),
   }, 
 ];
 
