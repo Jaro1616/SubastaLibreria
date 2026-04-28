@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import UserService from "@/services/UserService";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -30,7 +30,7 @@ export default function Register() {
             name: '',
             email: '',
             password: '',
-            rol_id: 2,
+            rol_id: '',
         },
         resolver: yupResolver(schema)
     });
@@ -38,7 +38,7 @@ export default function Register() {
     const onSubmit = async (data) => {
         try {
             const response = await UserService.createUser(data);
-            if (response?.success) {
+            if (response?.data?.success) {
                 toast.success("Usuario creado correctamente");
                 navigate("/user/login");
             } else {
@@ -94,6 +94,19 @@ export default function Register() {
                             {errors.password && (
                                 <p className="text-red-300 text-sm mt-1">{errors.password.message}</p>
                             )}
+                        </div>
+
+                        <div>
+                            <Label htmlFor="rol_id">Seleccione su Rol</Label>
+                            <select
+                                id="rol_id"
+                                {...register("rol_id", { valueAsNumber: true })}
+                                className="w-full rounded-md border border-white/30 bg-white/20 text-white px-3 py-2 mt-1"
+                            >
+                                <option value={2} className="text-black">Vendedor</option>
+                                <option value={3} className="text-black">Comprador</option>
+                            </select>
+                            {errors.rol_id && <p className="text-red-300 text-sm mt-1">{errors.rol_id.message}</p>}
                         </div>
 
                         <Button

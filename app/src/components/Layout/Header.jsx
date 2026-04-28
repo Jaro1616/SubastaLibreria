@@ -39,17 +39,17 @@ export default function Header() {
 
 const navItems = [
   //{ title: "Mis Libros", href: "/book", icon: <Book className="h-4 w-4" /> },
-  {
+  /* {
     title: "Filtrar Libros",
     href: "/book/filter",
     icon: <Filter className="h-4 w-4" />,
     show: true,
-  },
+  }, */
   {
     title: "Subastas",
     href: "/auction/table",
     icon: <ShoppingBasket className="h-4 w-4" />,
-    show: authorize(["Administrador", "Comprador"]),
+    show: authorize(["Administrador", "Comprador", "Vendedor"]),
   },
 
   {

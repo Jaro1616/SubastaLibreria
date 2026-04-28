@@ -97,7 +97,7 @@ class UserModel
 		}
 		//Consulta sql            
 		$vSql = "Insert into user (name,email,password,rol_id,active)" .
-			" Values ('$objeto->name','$objeto->email','$objeto->password',$objeto->rol_id ,$objeto->active)";
+			" Values ('$objeto->name','$objeto->email','$objeto->password',$objeto->rol_id , 1)";
 
 		//Ejecutar la consulta
 		$vResultado = $this->enlace->executeSQL_DML_last($vSql);

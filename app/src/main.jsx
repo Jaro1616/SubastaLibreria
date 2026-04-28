@@ -26,6 +26,8 @@ import TablePayment from './components/Payment/TablePayment'
 import Login from './components/User/Login'
 import Register from './components/User/Register'
 
+import { RoleRoute } from "@/components/Auth/RoleRoute";
+
 const rutas = createBrowserRouter([
   {
     element: <Layout/>,
@@ -38,30 +40,30 @@ const rutas = createBrowserRouter([
       
        //Rutas Book
       //{path:"book/table", element: <TableMovies/>},
-      {path:"book", element: <ListBooks/>},
-      {path:"/book/create", element: <CreateBook/>},
-      {path:"book/detail/:id", element: <DetailBook />},
-      { path: "book/edit/:id", element: <UpdateBook /> },
+      {path:"book", element: <RoleRoute requiredRoles={["Vendedor", "Administrador"]}> <ListBooks/> </RoleRoute>},
+      {path:"/book/create", element: <RoleRoute requiredRoles={["Vendedor", "Administrador"]}> <CreateBook/> </RoleRoute>},
+      {path:"book/detail/:id", element: <RoleRoute requiredRoles={["Vendedor", "Administrador"]}> <DetailBook /> </RoleRoute>},
+      {path:"book/edit/:id", element: <RoleRoute requiredRoles={["Vendedor", "Administrador"]}> <UpdateBook /> </RoleRoute>},
 
       //Rutas User
-      {path:"user/table", element: <TableUsers/>},
+      {path:"user/table", element: <RoleRoute requiredRoles={["Administrador"]}> <TableUsers/> </RoleRoute>},
       {path: '/user/login',element: <Login />},
       {path: '/user/create',element: <Register />},
-      {path:"user/detail/:id", element: <DetailUser />},
-      {path:"user/update/:id", element: <UpdateUser />},
+      {path:"user/detail/:id", element: <RoleRoute requiredRoles={["Administrador"]}> <DetailUser /> </RoleRoute>},
+      {path:"user/update/:id", element: <RoleRoute requiredRoles={["Administrador"]}> <UpdateUser /> </RoleRoute>},
 
       //Rutas Auction
-      {path:"auction/table", element: <TableAuctions/>},
-      {path:"payment/table", element: <TablePayment />},
-      {path:"/auction/maintenance", element: <MaintenanceAuctions/>},
-      {path:"/auction/create", element: <CreateAuction />},
-      {path:"auction/detail/:id", element: <DetailAuction/>},
-      {path:"/auction/update/:id", element: <UpdateAuction />},
+      {path:"auction/table", element: <RoleRoute requiredRoles={["Comprador", "Administrador", "Vendedor"]}> <TableAuctions/> </RoleRoute>},
+      {path:"payment/table", element: <RoleRoute requiredRoles={["Comprador", "Administrador"]}> <TablePayment /> </RoleRoute>},
+      {path:"/auction/maintenance", element: <RoleRoute requiredRoles={["Vendedor", "Administrador"]}> <MaintenanceAuctions/> </RoleRoute>},
+      {path:"/auction/create", element: <RoleRoute requiredRoles={["Vendedor", "Administrador"]}> <CreateAuction /> </RoleRoute>},
+      {path:"auction/detail/:id", element: <RoleRoute requiredRoles={["Comprador", "Administrador", "Vendedor"]}> <DetailAuction/> </RoleRoute>},
+      {path:"/auction/update/:id", element: <RoleRoute requiredRoles={["Vendedor", "Administrador"]}><UpdateAuction /></RoleRoute>},
       
 
       //Rutas Bid
-      {path:"auction/bid/detail/:id", element: <DetailBid/>},
-      {path:"/auction/dobid/:id", element: <DoBids />}
+      {path:"auction/bid/detail/:id", element: <RoleRoute requiredRoles={["Vendedor", "Administrador", "Comprador"]}><DetailBid/></RoleRoute>},
+      {path:"/auction/dobid/:id", element: <RoleRoute requiredRoles={["Comprador", "Administrador"]}><DoBids /></RoleRoute>}
     ]
   }
 ])
